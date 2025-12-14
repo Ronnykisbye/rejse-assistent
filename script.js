@@ -169,36 +169,50 @@ class TravelApp {
         }
     }
     
-    // === DATA INDHENTNING FUNKTIONER SEKTION ===
-    async loadRestaurants() {
-        const detailContent = document.getElementById('detailContent');
-        showScreen('detailScreen');
+ // === DATA INDHENTNING FUNKTIONER SEKTION (forbedret) ===
+async loadAccommodation() {
+    const detailContent = document.getElementById('detailContent');
+    showScreen('detailScreen');
+    
+    TravelComponents.showLoading(detailContent);
+    
+    try {
+        const accommodation = await TravelAPI.findAccommodation(
+            this.currentTrip.lat, 
+            this.currentTrip.lon
+        );
         
-        TravelComponents.showLoading(detailContent);
-        
-        try {
-            const restaurants = await TravelAPI.findRestaurants(
-                this.currentTrip.lat, 
-                this.currentTrip.lon
-            );
-            
-            if (restaurants.length === 0) {
-                TravelComponents.showNoResults(detailContent);
-                return;
-            }
-            
-            const restaurantsHTML = restaurants
-                .slice(0, 10)
-                .map(r => TravelComponents.createRestaurantCard(r))
-                .join('');
-            
-            detailContent.innerHTML = restaurantsHTML;
-            
-        } catch (error) {
-            console.error('Error loading restaurants:', error);
-            TravelComponents.showError(detailContent);
+        if (accommodation.length === 0) {
+            TravelComponents.showNoResults(detailContent);
+            return;
         }
+        
+        const accommodationHTML = accommodation
+            .slice(0, 10)
+            .map(a => TravelComponents.createAccommodationCard(a))
+            .join('');
+        
+        detailContent.innerHTML = accommodationHTML;
+        
+    } catch (error) {
+        console.error('Error loading accommodation:', error);
+        
+        // Vis brugervenlig fejlmeddelelse
+        detailContent.innerHTML = `
+            <div class="error-message">
+                <i class="fas fa-exclamation-triangle"></i>
+                <h3>Overnatning søgning fejlede</h3>
+                <p>Overpass API'en er midlertidigt utilgængelig. Prøv igen senere.</p>
+                <p>Alternativt kan du prøve:</p>
+                <ul>
+                    <li>Prøv at søge efter restauranter i stedet</li>
+                    <li>Prøv igen om et par minutter</li>
+                    <li>Kontakt os hvis problemet fortsætter</li>
+                </ul>
+            </div>
+        `;
     }
+}
     
     async loadAccommodation() {
         const detailContent = document.getElementById('detailContent');
