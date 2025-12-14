@@ -1,190 +1,118 @@
-// === UI KOMPONENTER KLASSE ===
-class TravelComponents {
+// === TRAVEL COMPONENTS KLASSE ===
+// Denne fil indeholder alle UI-komponenter og hjælpefunktioner
+// for at vise data i appen på en pæn måde
+
+const TravelComponents = {
+    
     // === LOADING KOMPONENTER SEKTION ===
-    static showLoading(container) {
+    // Viser loading state når data hentes
+    showLoading: function(container) {
         container.innerHTML = `
             <div class="loading">
-                <div class="loading-spinner"></div>
-                <p>${t('loading')}</p>
+                <div class="spinner"></div>
+                <p>${translations.da.loading}</p>
             </div>
         `;
-    }
-    
-    static showError(container, message = null) {
-        container.innerHTML = `
-            <div class="error-message">
-                <i class="fas fa-exclamation-triangle"></i>
-                <h3>Der opstod en fejl</h3>
-                <p>${message || 'Prøv venligst igen senere. API'en er midlertidigt utilgængelig.'}</p>
-            </div>
-        `;
-    }
-    
-    static showNoResults(container) {
+    },
+
+    // === NO RESULTS KOMPONENTER SEKTION ===  
+    // Viser besked når der ikke er resultater
+    showNoResults: function(container) {
         container.innerHTML = `
             <div class="no-results">
-                <i class="fas fa-search"></i>
-                <h3>Ingen resultater fundet</h3>
-                <p>Prøv at ændre din søgning eller kontakt os hvis problemet fortsætter.</p>
+                <p>${translations.da.noResults}</p>
             </div>
         `;
-    }
-    
-    // === RESTAURANT KORT SEKTION ===
-    static createRestaurantCard(restaurant) {
-        const mapsUrl = `https://maps.google.com/?q=${restaurant.lat},${restaurant.lon}`;
+    },
+
+    // === ERROR KOMPONENTER SEKTION ===
+    // Viser fejlbesked når noget går galt
+    showError: function(container) {
+        container.innerHTML = `
+            <div class="error">
+                <p>${translations.da.error}</p>
+            </div>
+        `;
+    },
+
+    // === RESTAURANT KORT KOMPONENT ===
+    // Opretter et kort for hver restaurant
+    createRestaurantCard: function(restaurant, index) {
         return `
-            <div class="place-card">
-                <h3>
-                    <i class="fas fa-utensils"></i> ${restaurant.name}
-                </h3>
-                <p><strong>Type:</strong> ${restaurant.type}</p>
-                ${restaurant.tags.cuisine ? `<p><strong>Køkken:</strong> ${restaurant.tags.cuisine}</p>` : ''}
-                ${restaurant.tags.phone ? `<p><strong>${t('phone')}:</strong> ${restaurant.tags.phone}</p>` : ''}
-                ${restaurant.tags.website ? `<p><strong>${t('website')}:</strong> <a href="${restaurant.tags.website}" target="_blank">${restaurant.tags.website}</a></p>` : ''}
+            <div class="card">
+                <h3>${restaurant.name}</h3>
+                <p>${restaurant.address}</p>
+                <p>${restaurant.cuisine}</p>
                 <div class="card-actions">
-                    <a href="${mapsUrl}" target="_blank" class="neon-btn small">
-                        <i class="fas fa-map-marker-alt"></i> ${t('openInMaps')}
-                    </a>
+                    <button class="btn primary">Se mere</button>
                 </div>
             </div>
         `;
-    }
-    
-    // === OVERNATNING KORT SEKTION ===
-    static createAccommodationCard(accommodation) {
-        const mapsUrl = `https://maps.google.com/?q=${accommodation.lat},${accommodation.lon}`;
+    },
+
+    // === OVERNATNING KORT KOMPONENT ===
+    // Opretter et kort for hver overnatningsmulighed
+    createAccommodationCard: function(place, index) {
         return `
-            <div class="place-card">
-                <h3>
-                    <i class="fas fa-bed"></i> ${accommodation.name}
-                </h3>
-                <p><strong>Type:</strong> ${accommodation.type}</p>
-                ${accommodation.tags.stars ? `<p><strong>Stjerner:</strong> ${accommodation.tags.stars}</p>` : ''}
-                ${accommodation.tags.phone ? `<p><strong>${t('phone')}:</strong> ${accommodation.tags.phone}</p>` : ''}
-                ${accommodation.tags.website ? `<p><strong>${t('website')}:</strong> <a href="${accommodation.tags.website}" target="_blank">${accommodation.tags.website}</a></p>` : ''}
+            <div class="card">
+                <h3>${place.name}</h3>
+                <p>${place.address}</p>
+                <p>${place.type}</p>
                 <div class="card-actions">
-                    <a href="${mapsUrl}" target="_blank" class="neon-btn small">
-                        <i class="fas fa-map-marker-alt"></i> ${t('openInMaps')}
-                    </a>
+                    <button class="btn primary">Se mere</button>
                 </div>
             </div>
         `;
-    }
-    
-    // === SEVÆRDIGHED KORT SEKTION ===
-    static createSightCard(sight, index) {
-        const mapsUrl = `https://maps.google.com/?q=${sight.lat},${sight.lon}`;
+    },
+
+    // === SEVÆRDIGHED KORT KOMPONENT ===
+    // Opretter et kort for hver seværdighed
+    createSightCard: function(sight, index) {
         return `
-            <div class="place-card">
-                <h3>
-                    <span class="sight-number">${index + 1}.</span>
-                    <i class="fas fa-camera"></i> ${sight.name}
-                </h3>
-                <p><strong>Type:</strong> ${sight.type}</p>
-                ${sight.tags.historic ? `<p><strong>Historisk:</strong> ${sight.tags.historic}</p>` : ''}
-                ${sight.tags.wikipedia ? `<p><a href="${sight.tags.wikipedia}" target="_blank">Læs mere på Wikipedia</a></p>` : ''}
+            <div class="card">
+                <h3>${sight.name}</h3>
+                <p>${sight.description}</p>
                 <div class="card-actions">
-                    <a href="${mapsUrl}" target="_blank" class="neon-btn small">
-                        <i class="fas fa-map-marker-alt"></i> ${t('openInMaps')}
-                    </a>
+                    <button class="btn primary">Se mere</button>
                 </div>
             </div>
         `;
-    }
-    
-    // === HEMMELIGT STED KORT SEKTION ===
-    static createSecretCard(place, index) {
-        const mapsUrl = `https://maps.google.com/?q=${place.lat},${place.lon}`;
+    },
+
+    // === HEMMELIG STED KORT KOMPONENT ===
+    // Opretter et kort for hver hemmelig attraktion
+    createSecretCard: function(secret, index) {
         return `
-            <div class="place-card secret-card">
-                <h3>
-                    <span class="secret-number">${index + 1}.</span>
-                    <i class="fas fa-key"></i> ${place.name}
-                </h3>
-                <p><strong>Gemt gemme:</strong> ${place.type}</p>
+            <div class="card">
+                <h3>${secret.name}</h3>
+                <p>${secret.description}</p>
                 <div class="card-actions">
-                    <a href="${mapsUrl}" target="_blank" class="neon-btn small">
-                        <i class="fas fa-map-marker-alt"></i> ${t('openInMaps')}
-                    </a>
+                    <button class="btn primary">Se mere</button>
                 </div>
             </div>
         `;
-    }
-    
-    // === BILLEDE GALLERI SEKTION ===
-    static createImageGallery(images) {
-        if (!images || images.length === 0) {
-            return `
-                <div class="image-gallery">
-                    <p>Ingen billeder fundet</p>
+    },
+
+    // === BILLEDE KORT KOMPONENT ===
+    // Opretter et kort for hvert billede
+    createImageCard: function(image, index) {
+        return `
+            <div class="card">
+                <img src="${image.url}" alt="${image.description}" class="image-card">
+                <p>${image.description}</p>
+                <div class="card-actions">
+                    <button class="btn primary">Se mere</button>
                 </div>
-            `;
-        }
-        
-        const galleryHTML = images.map(img => `
-            <div class="image-item">
-                <img src="${img.url}" alt="${img.title}" onclick="window.open('${img.url}', '_blank')">
-                <p>${img.title}</p>
-            </div>
-        `).join('');
-        
-        return `
-            <div class="image-gallery">
-                ${galleryHTML}
             </div>
         `;
-    }
-    
-    // === RUTE RESULTAT SEKTION ===
-    static createRouteResult(route) {
-        if (route.error) {
-            return `<div class="route-error"><p>${route.error}</p></div>`;
-        }
-        
-        return `
-            <div class="route-success">
-                <h3><i class="fas fa-route"></i> Rute Fundet</h3>
-                <p><strong>${t('distance')}:</strong> ${route.distance}</p>
-                <p><strong>${t('duration')}:</strong> ${route.duration}</p>
-                <a href="https://maps.google.com/" target="_blank" class="neon-btn">
-                    <i class="fas fa-external-link-alt"></i> Åbn i Google Maps
-                </a>
-            </div>
-        `;
-    }
-    
-    // === BY INFO KORT SEKTION ===
-    static createCityInfo(cityInfo, weather) {
-        let weatherHTML = '';
-        if (weather) {
-            weatherHTML = `
-                <div class="weather-info">
-                    <h4><i class="fas fa-cloud"></i> Vejr</h4>
-                    <p>${weather.temp}°C - ${weather.description}</p>
-                </div>
-            `;
-        }
-        
-        return `
-            <div class="city-info">
-                <h3>Om ${cityInfo.title || 'Byen'}</h3>
-                <p>${cityInfo.extract || 'Ingen information tilgængelig'}</p>
-                ${weatherHTML}
-                ${cityInfo.content_urls?.desktop?.page ? `
-                    <a href="${cityInfo.content_urls.desktop.page}" target="_blank" class="neon-btn small">
-                        <i class="fas fa-wikipedia-w"></i> Læs mere på Wikipedia
-                    </a>
-                ` : ''}
-            </div>
-        `;
-    }
-    
-    // === VEJR KORT SEKTION ===
-    static createWeatherCard(weather) {
+    },
+
+    // === VEJR KORT KOMPONENT ===
+    // Opretter et vejr-kort med temperatur og beskrivelse
+    createWeatherCard: function(weather) {
         return `
             <div class="weather-card">
-                <h3><i class="fas fa-cloud-sun"></i> Vejr i ${window.travelApp.currentCity}</h3>
+                <h3>🌤️ Vejr i ${window.travelApp.currentCity}</h3>
                 <div class="weather-info">
                     <div class="temp">${weather.temp}°C</div>
                     <div class="description">${weather.description}</div>
@@ -195,136 +123,4 @@ class TravelComponents {
             </div>
         `;
     }
-}
-
-// === HJÆLP FUNKTIONER SEKTION ===
-function showScreen(screenId) {
-    document.querySelectorAll('.screen').forEach(screen => {
-        screen.classList.remove('active');
-    });
-    
-    const targetScreen = document.getElementById(screenId);
-    if (targetScreen) {
-        targetScreen.classList.add('active');
-    }
-}
-
-function activateMenuButton(dataFeature) {
-    document.querySelectorAll('.menu-btn').forEach(btn => {
-        btn.classList.remove('active');
-    });
-    
-    const activeBtn = document.querySelector(`[data-feature="${dataFeature}"]`);
-    if (activeBtn) {
-        activeBtn.classList.add('active');
-    }
-}
-
-function resetForm(formId) {
-    const form = document.getElementById(formId);
-    if (form) {
-        form.reset();
-    }
-}
-
-function getFormData(formId) {
-    const form = document.getElementById(formId);
-    if (!form) return {};
-    
-    const formData = {};
-    const inputs = form.querySelectorAll('input, select');
-    
-    inputs.forEach(input => {
-        formData[input.id] = input.value;
-    });
-    
-    return formData;
-}
-
-function formatDate(dateString) {
-    const date = new Date(dateString);
-    return date.toLocaleDateString(currentLanguage === 'da' ? 'da-DK' : 'en-US');
-}
-
-function validateForm(formData, requiredFields = []) {
-    const errors = [];
-    
-    requiredFields.forEach(field => {
-        if (!formData[field] || formData[field].trim() === '') {
-            errors.push(`${field} er påkrævet`);
-        }
-    });
-    
-    if (formData.startDate) {
-        const startDate = new Date(formData.startDate);
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-        
-        if (startDate < today) {
-            errors.push('Start dato kan ikke være i fortiden');
-        }
-    }
-    
-    if (formData.days) {
-        const days = parseInt(formData.days);
-        if (isNaN(days) || days < 1 || days > 30) {
-            errors.push('Antal dage skal være mellem 1 og 30');
-        }
-    }
-    
-    return errors;
-}
-
-function createMapsLink(lat, lon, name = '') {
-    const query = name ? `${name} ${lat} ${lon}` : `${lat} ${lon}`;
-    return `https://maps.google.com/?q=${encodeURIComponent(query)}`;
-}
-
-// === STORAGE FUNKTIONER SEKTION ===
-class AppStorage {
-    static saveTrip(tripData) {
-        const trips = this.getTrips();
-        trips.push({
-            ...tripData,
-            id: Date.now(),
-            createdAt: new Date().toISOString()
-        });
-        localStorage.setItem('travelAppTrips', JSON.stringify(trips));
-    }
-    
-    static getTrips() {
-        const saved = localStorage.getItem('travelAppTrips');
-        return saved ? JSON.parse(saved) : [];
-    }
-    
-    static deleteTrip(tripId) {
-        const trips = this.getTrips();
-        const filtered = trips.filter(trip => trip.id !== tripId);
-        localStorage.setItem('travelAppTrips', JSON.stringify(filtered));
-    }
-    
-    static getSettings() {
-        const saved = localStorage.getItem('travelAppSettings');
-        return saved ? JSON.parse(saved) : {
-            theme: 'dark',
-            language: 'da'
-        };
-    }
-    
-    static saveSettings(settings) {
-        localStorage.setItem('travelAppSettings', JSON.stringify(settings));
-    }
-}
-
-// === EKSPORT SEKTION ===
-window.TravelComponents = TravelComponents;
-window.ScreenUtils = {
-    showScreen,
-    activateMenuButton,
-    resetForm,
-    getFormData,
-    formatDate,
-    validateForm,
-    createMapsLink
 };
-window.AppStorage = AppStorage;
