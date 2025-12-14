@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="da">
 <head>
+    <!-- === HEAD SEKTION === -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rejse Assistent</title>
@@ -9,7 +10,7 @@
 </head>
 <body>
     <div id="app">
-        <!-- Start skærm -->
+        <!-- === START SKÆRM SEKTION === -->
         <div id="startScreen" class="screen active">
             <div class="header">
                 <h1 class="neon-title">🌍 REJSE ASSISTENT</h1>
@@ -54,7 +55,7 @@
             </div>
         </div>
 
-        <!-- Hovedmenu -->
+        <!-- === HOVEDMENU SEKTION === -->
         <div id="mainMenu" class="screen">
             <div class="header">
                 <button id="backToStart" class="neon-btn back-btn">
@@ -88,10 +89,14 @@
                     <i class="fas fa-bus"></i>
                     <span>Transport</span>
                 </button>
+                <button class="menu-btn" data-feature="weather">
+                    <i class="fas fa-cloud-sun"></i>
+                    <span>Vejr</span>
+                </button>
             </div>
         </div>
 
-        <!-- Detalje skærme placeholders -->
+        <!-- === DETALJE SKÆRM SEKTION === -->
         <div id="detailScreen" class="screen">
             <div class="header">
                 <button id="backToMenu" class="neon-btn back-btn">
@@ -104,7 +109,7 @@
             </div>
         </div>
 
-        <!-- Transport planlægger -->
+        <!-- === TRANSPORT PLANLÆGGER SEKTION === -->
         <div id="transportPlanner" class="screen">
             <div class="header">
                 <button id="backFromTransport" class="neon-btn back-btn">
@@ -139,10 +144,10 @@
         </div>
     </div>
 
-   <!-- Sørg for denne rækkefølge er korrekt -->
-<script src="translations.js"></script>
-<script src="api.js"></script>
-<script src="components.js"></script>
-<script src="script.js"></script>
+    <!-- === SCRIPT INKLUDERING SEKTION === -->
+    <script src="translations.js"></script>
+    <script src="api.js"></script>
+    <script src="components.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
