@@ -1,6 +1,6 @@
 // === OVERSETTELSER SEKTION ===
-// Denne fil indeholder alle oversættelser for appen
-// Bruges til at vise tekster på dansk og engelsk
+// Denne fil indeholder oversættelser for 5 sprog:
+// da: Dansk, de: Tysk, en: Engelsk, pl: Polsk, lt: Litauisk
 
 const translations = {
     // === DANSK OVERSETTELSER SEKTION ===
@@ -39,6 +39,42 @@ const translations = {
         weather: 'Vejr'
     },
     
+    // === TYSK OVERSETTELSER SEKTION ===
+    de: {
+        appTitle: 'REISE ASSISTENT',
+        destination: 'Zielstadt',
+        startDate: 'Startdatum',
+        days: 'Anzahl Tage',
+        selectLanguage: 'Sprache auswählen:',
+        startTravel: 'REISE STARTEN',
+        back: 'ZURÜCK',
+        restaurants: 'Restaurants',
+        accommodation: 'Unterkunft',
+        sights: 'Sehenswürdigkeiten',
+        secrets: 'Geheime Orte',
+        images: 'Bilder',
+        transport: 'Transport',
+        transportPlanner: 'Transport Planer',
+        from: 'Von',
+        to: 'Nach',
+        departureDate: 'Abreisedatum',
+        departureTime: 'Abfahrtszeit',
+        planRoute: 'ROUTE PLANEN',
+        distance: 'Entfernung',
+        duration: 'Dauer',
+        loading: 'Lädt...',
+        noResults: 'Keine Ergebnisse gefunden',
+        error: 'Ein Fehler ist aufgetreten',
+        openInMaps: 'In Google Maps öffnen',
+        website: 'Webseite',
+        phone: 'Telefon',
+        selectDestinationFirst: 'Bitte wählen Sie zuerst ein Ziel',
+        errors: 'Fehler:',
+        isRequired: ' ist erforderlich',
+        cityNotFound: 'Stadt nicht gefunden. Bitte versuchen Sie es erneut.',
+        weather: 'Wetter'
+    },
+    
     // === ENGELSK OVERSETTELSER SEKTION ===
     en: {
         appTitle: 'TRAVEL ASSISTENT',
@@ -73,37 +109,9 @@ const translations = {
         isRequired: ' is required',
         cityNotFound: 'Could not find city. Please try again.',
         weather: 'Weather'
-    }
-};
-    de: {
-        appTitle: 'REISE ASSISTENT',
-        destination: 'Ziel Stadt',
-        startDate: 'Startdatum',
-        days: 'Anzahl Tage',
-        selectLanguage: 'Sprache wählen:',
-        startTravel: 'REISE STARTEN',
-        back: 'ZURÜCK',
-        restaurants: 'Restaurants',
-        accommodation: 'Unterkunft',
-        sights: '10 Sehenswürdigkeiten',
-        secrets: '5 Geheimtipps',
-        images: 'Bilder',
-        transport: 'Transport',
-        transportPlanner: 'Transport Planer',
-        from: 'Von',
-        to: 'Nach',
-        departureDate: 'Datum',
-        departureTime: 'Zeit',
-        planRoute: 'ROUTE PLANEN',
-        distance: 'Entfernung',
-        duration: 'Dauer',
-        loading: 'Lädt...',
-        noResults: 'Keine Ergebnisse gefunden',
-        error: 'Ein Fehler ist aufgetreten',
-        openInMaps: 'In Google Maps öffnen',
-        website: 'Webseite',
-        phone: 'Telefon'
     },
+    
+    // === POLSK OVERSETTELSER SEKTION ===
     pl: {
         appTitle: 'ASYSTENT PODRÓŻY',
         destination: 'Miasto docelowe',
@@ -111,47 +119,54 @@ const translations = {
         days: 'Liczba dni',
         selectLanguage: 'Wybierz język:',
         startTravel: 'ROZPOCZNIJ PODRÓŻ',
-        back: 'WRÓC',
+        back: 'POWRÓT',
         restaurants: 'Restauracje',
-        accommodation: 'Noclegi',
-        sights: '10 Atrakcji',
-        secrets: '5 Sekretów',
+        accommodation: ' Zakwaterowanie',
+        sights: 'Atrakcje turystyczne',
+        secrets: 'Ukryte miejsca',
         images: 'Zdjęcia',
         transport: 'Transport',
-        transportPlanner: 'Planer Transportu',
+        transportPlanner: 'Planer transportu',
         from: 'Z',
         to: 'Do',
-        departureDate: 'Data',
-        departureTime: 'Czas',
-        planRoute: 'ZAPLANUJ TRASĘ',
-        distance: 'Dystans',
+        departureDate: 'Data odjazdu',
+        departureTime: 'Godzina odjazdu',
+        planRoute: 'PLANUJ TRASĘ',
+        distance: 'Odległość',
         duration: 'Czas trwania',
         loading: 'Ładowanie...',
         noResults: 'Brak wyników',
         error: 'Wystąpił błąd',
         openInMaps: 'Otwórz w Google Maps',
         website: 'Strona internetowa',
-        phone: 'Telefon'
+        phone: 'Telefon',
+        selectDestinationFirst: 'Najpierw wybierz cel podróży',
+        errors: 'Błędy:',
+        isRequired: ' jest wymagane',
+        cityNotFound: 'Nie znaleziono miasta. Spróbuj ponownie.',
+        weather: 'Pogoda'
     },
+    
+    // === LITAUISK OVERSETTELSER SEKTION ===
     lt: {
         appTitle: 'KELIONIŲ ASISTENTAS',
-        destination: 'Miesto susisiekimas',
+        destination: 'Kryptis',
         startDate: 'Pradžios data',
         days: 'Dienų skaičius',
         selectLanguage: 'Pasirinkite kalbą:',
-        startTravel: 'PRADĖTI KELIONĘ',
+        startTravel: 'PRADĖTI KELIONĄ',
         back: 'ATGAL',
         restaurants: 'Restoranai',
-        accommodation: 'Apgyvendinimas',
-        sights: '10 Lankytinų vietų',
-        secrets: '5 Paslapčių',
+        accommodation: 'Viešbučiai',
+        sights: 'Lankytinos vietos',
+        secrets: 'Slaptos vietos',
         images: 'Nuotraukos',
         transport: 'Transportas',
-        transportPlanner: 'Transporto Planuoklis',
+        transportPlanner: 'Transporto planuoklis',
         from: 'Iš',
         to: 'Į',
-        departureDate: 'Data',
-        departureTime: 'Laikas',
+        departureDate: 'Išvykimo data',
+        departureTime: 'Išvykimo laikas',
         planRoute: 'PLANUOTI MARŠRUTĄ',
         distance: 'Atstumas',
         duration: 'Trukmė',
@@ -160,90 +175,17 @@ const translations = {
         error: 'Įvyko klaida',
         openInMaps: 'Atidaryti Google Maps',
         website: 'Svetainė',
-        phone: 'Telefonas'
+        phone: 'Telefonas',
+        selectDestinationFirst: 'Pirmiau pasirinkite tikslą',
+        errors: 'Klaidos:',
+        isRequired: ' yra privalomas',
+        cityNotFound: 'Miestas nerastas. Prašome bandyti dar kartą.',
+        weather: 'Oras'
     }
 };
-
-// === SPROG HÅNDTERING SEKTION ===
-let currentLanguage = 'da';
-
-function setLanguage(lang) {
-    currentLanguage = lang;
-    localStorage.setItem('travelAppLanguage', lang);
-    updateLanguage();
-}
-
-function updateLanguage() {
-    const texts = translations[currentLanguage];
-    
-    document.querySelectorAll('[data-translate]').forEach(element => {
-        const key = element.getAttribute('data-translate');
-        if (texts[key]) {
-            if (element.tagName === 'INPUT' && element.type !== 'submit') {
-                element.placeholder = texts[key];
-            } else {
-                element.textContent = texts[key];
-            }
-        }
-    });
-    
-    const titleElement = document.querySelector('.neon-title');
-    if (titleElement) {
-        const emoji = titleElement.textContent.includes('🌍') ? '🌍 ' : '';
-        titleElement.textContent = emoji + texts.appTitle;
-    }
-    
-    document.querySelectorAll('.menu-btn').forEach((btn, index) => {
-        const map = ['restaurants', 'accommodation', 'sights', 'secrets', 'images', 'transport', 'weather'];
-        const key = map[index];
-        if (texts[key] && btn.querySelector('span')) {
-            btn.querySelector('span').textContent = texts[key];
-        }
-    });
-    
-    updateFormLabels(texts);
-}
-
-function updateFormLabels(texts) {
-    const labelMap = {
-        'destination': texts.destination,
-        'startDate': texts.startDate,
-        'days': texts.days,
-        'fromLocation': texts.from,
-        'toLocation': texts.to,
-        'departureDate': texts.departureDate,
-        'departureTime': texts.departureTime
-    };
-    
-    Object.entries(labelMap).forEach(([id, text]) => {
-        const label = document.querySelector(`label[for="${id}"]`);
-        if (label) {
-            label.textContent = text;
-        }
-    });
-}
-
-function t(key) {
-    return translations[currentLanguage][key] || translations['da'][key] || key;
-}
-
-function initLanguage() {
-    const savedLang = localStorage.getItem('travelAppLanguage') || 'da';
-    currentLanguage = savedLang;
-    
-    const langSelect = document.getElementById('languageSelect');
-    if (langSelect) {
-        langSelect.value = savedLang;
-    }
-    
-    updateLanguage();
-}
 
 // === EKSPORT SEKTION ===
-window.Translations = {
-    setLanguage,
-    updateLanguage,
-    t,
-    initLanguage,
-    currentLanguage: () => currentLanguage
-};
+// Eksporter oversættelsesobjektet så det kan bruges i andre filer
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = translations;
+}
