@@ -1,102 +1,821 @@
 <!DOCTYPE html>
-<html lang="da">
+<html lang="da" dir="ltr">
 <head>
+    <!-- =============================================================================
+         1. HTML META DATA & SEO OPTIMIZATION
+         ============================================================================= -->
+    
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>REJSE ASSISTENT</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    
+    <!-- SEO Meta Tags -->
+    <title>Rejse Assistent | Planlæg Din Perfekte Reise</title>
+    <meta name="description" content="Avanceret rejse assistent til planlægning af restauranter, overnatning, seværdigheder og transport i hele verden">
+    <meta name="keywords" content="rejse, hotel, restaurant, transport, planlægning, danmark, europa">
+    <meta name="author" content="Travel Assistant App">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://travel-assistant.app/">
+    <meta property="og:title" content="Rejse Assistent | Planlæg Din Perfekte Reise">
+    <meta property="og:description" content="Avanceret rejse assistent til planlægning af restauranter, overnatning, seværdigheder og transport">
+    <meta property="og:image" content="https://travel-assistant.app/og-image.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://travel-assistant.app/">
+    <meta property="twitter:title" content="Rejse Assistent | Planlæg Din Perfekte Reise">
+    <meta property="twitter:description" content="Avanceret rejse assistent til planlægning af restauranter, overnatning, seværdigheder og transport">
+    <meta property="twitter:image" content="https://travel-assistant.app/twitter-image.jpg">
+    
+    <!-- Favicon & App Icons -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='28' font-size='28'>✈️</text></svg>">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='28' font-size='28'>✈️</text></svg>">
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Theme & Performance -->
+    <meta name="theme-color" content="#2196F3">
+    <meta name="msapplication-TileColor" content="#2196F3">
+    
+    <!-- Preload Critical Resources -->
+    <link rel="preload" href="styles.css" as="style">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;500;600;700&display=swap" as="style">
+    
+    <!-- =============================================================================
+         2. CSS & FONT LOADING
+         ============================================================================= -->
+    
+    <!-- Main Stylesheet -->
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Fallback Font -->
+    <style>
+        @font-face {
+            font-family: 'System Fallback';
+            src: local('Arial'), local('Helvetica'), local('sans-serif');
+            size-adjust: 98%;
+            ascent-override: 95%;
+        }
+    </style>
+    
+    <!-- =============================================================================
+         3. SVG ICON DEFINITIONS (INLINE FOR PERFORMANCE)
+         ============================================================================= -->
 </head>
 <body>
-    <div class="app-container">
-        <!-- START SKÆRM -->
-        <div id="startScreen" class="screen">
-            <h1 data-translate="appTitle">REJSE ASSISTENT</h1>
-            
-            <div class="input-group">
-                <label for="destination" data-translate="destination">Destination</label>
-                <input type="text" id="destination" name="destination" required>
-            </div>
-            
-            <div class="input-group">
-                <label for="startDate" data-translate="startDate">Start dato</label>
-                <input type="date" id="startDate" name="startDate" required>
-            </div>
-            
-            <div class="input-group">
-                <label for="days" data-translate="days">Antal dage</label>
-                <input type="number" id="days" name="days" min="1" max="30" required>
-            </div>
-            
-            <div class="input-group">
-                <label for="selectLanguage" data-translate="selectLanguage">Vælg sprog</label>
-                <select id="selectLanguage" name="selectLanguage">
-                    <option value="da">Dansk</option>
-                    <option value="en">English</option>
-                    <option value="de">Deutsch</option>
-                    <option value="pl">Polski</option>
-                    <option value="lt">Lietuvių</option>
-                </select>
-            </div>
-            
-            <button id="startTravel" data-translate="startTravel" class="btn primary">START REJSE</button>
-        </div>
+    <!-- SVG Symbol Definitions -->
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+        <!-- Navigation Icons -->
+        <symbol id="icon-home" viewBox="0 0 24 24">
+            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+        </symbol>
+        
+        <symbol id="icon-back" viewBox="0 0 24 24">
+            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+        </symbol>
+        
+        <!-- Restaurant Icons -->
+        <symbol id="icon-restaurant" viewBox="0 0 24 24">
+            <path d="M11 9H9V2H7v7H5V2H3v7c0 2.12 1.66 3.84 3.75 3.97V22h2.5v-9.03C11.34 12.84 13 11.12 13 9V2h-2v7zm5-3v8h2.5v8H21V2c-2.76 0-5 2.24-5 4z"/>
+        </symbol>
+        
+        <symbol id="icon-hotel" viewBox="0 0 24 24">
+            <path d="M7 13c1.66 0 3-1.34 3-3S8.66 7 7 7s-3 1.34-3 3 1.34 3 3 3zm12-6h-8v7H3V5H1v15h2v-3h18v3h2v-9c0-2.21-1.79-4-4-4z"/>
+        </symbol>
+        
+        <symbol id="icon-sight" viewBox="0 0 24 24">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+        </symbol>
+        
+        <symbol id="icon-secret" viewBox="0 0 24 24">
+            <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
+        </symbol>
+        
+        <symbol id="icon-image" viewBox="0 0 24 24">
+            <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
+        </symbol>
+        
+        <symbol id="icon-transport" viewBox="0 0 24 24">
+            <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/>
+        </symbol>
+        
+        <!-- Loading Icons -->
+        <symbol id="icon-loading" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="60" stroke-dashoffset="60">
+                <animate attributeName="stroke-dashoffset" dur="1s" repeatCount="indefinite" values="60;0;60"/>
+            </circle>
+        </symbol>
+        
+        <!-- Action Icons -->
+        <symbol id="icon-map" viewBox="0 0 24 24">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+        </symbol>
+        
+        <symbol id="icon-phone" viewBox="0 0 24 24">
+            <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+        </symbol>
+        
+        <symbol id="icon-website" viewBox="0 0 24 24">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+        </symbol>
+        
+        <symbol id="icon-star" viewBox="0 0 24 24">
+            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+        </symbol>
+    </svg>
 
-        <!-- HOVEDMENU -->
-        <div id="mainMenu" class="screen" style="display: none;">
-            <h2 id="cityTitle"></h2>
-            
-            <div class="menu-grid">
-                <button class="menu-btn" data-menu="restaurants" data-translate="restaurants">🍽️ Restauranter</button>
-                <button class="menu-btn" data-menu="accommodation" data-translate="accommodation">🏨 Overnatning</button>
-                <button class="menu-btn" data-menu="sights" data-translate="sights">📸 Seværdigheder</button>
-                <button class="menu-btn" data-menu="secrets" data-translate="secrets">🔓 Hemmelige Steder</button>
-                <button class="menu-btn" data-menu="images" data-translate="images">🖼️ Billeder</button>
-                <button class="menu-btn" data-menu="transport" data-translate="transport">🚗 Transport</button>
-                <button class="menu-btn" data-menu="weather" data-translate="weather">🌤️ Vejr</button>
+    <!-- =============================================================================
+         4. SKIP LINK & ACCESSIBILITY (SCREEN READERS FIRST)
+         ============================================================================= -->
+    
+    <a href="#main-content" class="sr-only" data-translate="skipToContent">Gå til indhold</a>
+    
+    <!-- =============================================================================
+         5. LOADING OVERLAY (INITIAL LOAD STATE)
+         ============================================================================= -->
+    
+    <div id="loadingOverlay" class="loading-overlay" role="dialog" aria-modal="true" aria-label="Indlæser">
+        <div class="loading-content">
+            <div class="loading-spinner" aria-hidden="true">
+                <svg role="img" aria-label="Indlæser">
+                    <use href="#icon-loading"></use>
+                </svg>
             </div>
-            
-            <button class="back-btn" data-translate="back">Tilbage</button>
-        </div>
-
-        <!-- DETALJE SKÆRM -->
-        <div id="detailScreen" class="screen" style="display: none;">
-            <h2 id="detailTitle"></h2>
-            <div id="detailContent" class="detail-content"></div>
-            <button class="back-btn" data-translate="back">Tilbage</button>
-        </div>
-
-        <!-- TRANSPORT PLANLÆGGER -->
-        <div id="transportPlanner" class="screen" style="display: none;">
-            <h2 data-translate="transportPlanner">Transport Planlægger</h2>
-            
-            <div class="input-group">
-                <label for="fromLocation" data-translate="from">Fra</label>
-                <input type="text" id="fromLocation" name="fromLocation" required>
+            <div class="loading-message">
+                <h3 data-translate="loading">Indlæser...</h3>
             </div>
-            
-            <div class="input-group">
-                <label for="toLocation" data-translate="to">Til</label>
-                <input type="text" id="toLocation" name="toLocation" required>
-            </div>
-            
-            <div class="input-group">
-                <label for="departureDate" data-translate="departureDate">Afrejse dato</label>
-                <input type="date" id="departureDate" name="departureDate" required>
-            </div>
-            
-            <div class="input-group">
-                <label for="departureTime" data-translate="departureTime">Afrejse tid</label>
-                <input type="time" id="departureTime" name="departureTime" required>
-            </div>
-            
-            <button class="btn primary" data-translate="planRoute">Planlæg Rute</button>
-            <button class="back-btn" data-translate="back">Tilbage</button>
         </div>
     </div>
 
+    <!-- =============================================================================
+         6. MAIN APPLICATION HEADER
+         ============================================================================= -->
+    
+    <header class="app-header" role="banner">
+        <div class="container">
+            <h1 class="app-title" data-translate="appTitle">REJSE ASSISTENT</h1>
+            
+            <!-- Language Selector (Mobile Optimized) -->
+            <nav class="language-selector" role="navigation" aria-label="Søg valg">
+                <select id="selectLanguage" class="form-select language-select" aria-label="Vælg sprog">
+                    <option value="da" selected>Dansk</option>
+                    <option value="de">Deutsch</option>
+                    <option value="en">English</option>
+                    <option value="pl">Polski</option>
+                    <option value="lt">Lietuvių</option>
+                </select>
+            </nav>
+        </div>
+    </header>
+
+    <!-- =============================================================================
+         7. MAIN CONTENT AREA (ALL SCREENS)
+         ============================================================================= -->
+    
+    <main id="main-content" class="main-content" role="main">
+        
+        <!-- ========================================================================
+             SCREEN 1: START SCREEN (DEFAULT VISIBLE)
+             ======================================================================== -->
+        
+        <section id="startScreen" class="screen active" data-screen="start" role="tabpanel">
+            <div class="start-screen">
+                <div class="start-form">
+                    <form id="startForm" novalidate>
+                        <!-- Welcome Section -->
+                        <div class="welcome-section">
+                            <h2 class="welcome-title" data-translate="welcome">Velkommen til Rejse Assistent</h2>
+                            <p class="welcome-description" data-translate="welcomeDescription">
+                                Planlæg din perfekte rejse med vores avancerede rejseværktøjer
+                            </p>
+                        </div>
+                        
+                        <!-- Location Input -->
+                        <div class="form-group">
+                            <label for="destination" class="form-label" data-translate="destination">
+                                Destination By
+                            </label>
+                            <input type="text"
+                                   id="destination"
+                                   class="form-input"
+                                   name="destination"
+                                   placeholder="Indtast bynavn..."
+                                   data-translate-placeholder="destinationPlaceholder"
+                                   required
+                                   aria-required="true"
+                                   autocomplete="address-level2">
+                        </div>
+                        
+                        <!-- Date Inputs -->
+                        <div class="form-row">
+                            <div class="form-group half-width">
+                                <label for="startDate" class="form-label" data-translate="startDate">
+                                    Start dato
+                                </label>
+                                <input type="date"
+                                       id="startDate"
+                                       class="form-input"
+                                       name="startDate"
+                                       data-translate-placeholder="startDatePlaceholder"
+                                       required
+                                       aria-required="true">
+                            </div>
+                            
+                            <div class="form-group half-width">
+                                <label for="days" class="form-label" data-translate="days">
+                                    Antal dage
+                                </label>
+                                <input type="number"
+                                       id="days"
+                                       class="form-input"
+                                       name="days"
+                                       min="1"
+                                       max="30"
+                                       placeholder="Indtast antal dage"
+                                       data-translate-placeholder="daysPlaceholder"
+                                       required
+                                       aria-required="true">
+                            </div>
+                        </div>
+                        
+                        <!-- Start Button -->
+                        <button type="submit" 
+                                id="startTravel"
+                                class="btn btn-primary btn-lg start-btn"
+                                data-translate="startTravel">
+                            START REJSE
+                        </button>
+                    </form>
+                    
+                    <!-- Quick Actions -->
+                    <div class="quick-actions">
+                        <button class="btn btn-ghost" onclick="Components.useCurrentLocation()">
+                            📍 Brug min lokation
+                        </button>
+                        <button class="btn btn-ghost" onclick="Components.showRecentCities()">
+                            🏙️ Nylige byer
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================================
+             SCREEN 2: TRANSPORT SCREEN
+             ======================================================================== -->
+        
+        <section id="transportScreen" class="screen" data-screen="transport" role="tabpanel">
+            <div class="transport-screen">
+                <!-- Back Button -->
+                <div class="navigation-header">
+                    <button class="btn btn-ghost back-button" 
+                            id="backBtn"
+                            data-translate="back">
+                        ← TILBAGE
+                    </button>
+                    
+                    <h2 class="screen-title" data-translate="transportPlanner">
+                        Transport Planlægger
+                    </h2>
+                </div>
+                
+                <!-- Transport Form -->
+                <div class="transport-form">
+                    <form id="routeForm" novalidate>
+                        <!-- Route Inputs -->
+                        <div class="route-inputs">
+                            <div class="form-group">
+                                <label for="routeFrom" class="form-label" data-translate="from">
+                                    Fra
+                                </label>
+                                <input type="text"
+                                       id="routeFrom"
+                                       class="form-input"
+                                       name="from"
+                                       placeholder="Indtart startpunkt"
+                                       data-translate-placeholder="fromPlaceholder"
+                                       required
+                                       aria-required="true">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="routeTo" class="form-label" data-translate="to">
+                                    Til
+                                </label>
+                                <input type="text"
+                                       id="routeTo"
+                                       class="form-input"
+                                       name="to"
+                                       placeholder="Indtast destination"
+                                       data-translate-placeholder="toPlaceholder"
+                                       required
+                                       aria-required="true">
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group half-width">
+                                    <label for="departureDate" class="form-label" data-translate="departureDate">
+                                        Afrejse dato
+                                    </label>
+                                    <input type="date"
+                                           id="departureDate"
+                                           class="form-input"
+                                           name="departureDate"
+                                           data-translate-placeholder="departureDatePlaceholder"
+                                           required
+                                           aria-required="true">
+                                </div>
+                                
+                                <div class="form-group half-width">
+                                    <label for="departureTime" class="form-label" data-translate="departureTime">
+                                        Afrejse tid
+                                    </label>
+                                    <input type="time"
+                                           id="departureTime"
+                                           class="form-input"
+                                           name="departureTime"
+                                           data-translate-placeholder="departureTimePlaceholder"
+                                           required
+                                           aria-required="true">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Plan Route Button -->
+                        <button type="submit"
+                                id="planRoute"
+                                class="btn btn-primary btn-lg"
+                                data-translate="planRoute">
+                            PLANLÆG RUTE
+                        </button>
+                    </form>
+                    
+                    <!-- Route Results -->
+                    <div id="routeResult" class="route-result-container">
+                        <!-- Results will be dynamically inserted here -->
+                    </div>
+                    
+                    <!-- Transport Mode Options -->
+                    <div class="transport-modes">
+                        <h3 data-translate="transportMode">Transportform</h3>
+                        <div class="mode-options">
+                            <button class="mode-btn active" data-mode="car" data-translate="car">Bil</button>
+                            <button class="mode-btn" data-mode="train" data-translate="train">Tog</button>
+                            <button class="mode-btn" data-mode="bus" data-translate="bus">Bus</button>
+                            <button class="mode-btn" data-mode="bicycle" data-translate="bicycle">Cykel</button>
+                            <button class="mode-btn" data-mode="walking" data-translate="walking">Gående</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================================
+             SCREEN 3: RESTAURANT SCREEN
+             ======================================================================== -->
+        
+        <section id="restaurantScreen" class="screen" data-screen="restaurant" role="tabpanel">
+            <div class="restaurant-screen">
+                <!-- Screen Header -->
+                <div class="navigation-header">
+                    <button class="btn btn-ghost back-button" 
+                            id="backBtn"
+                            data-back-to="transportScreen">
+                        ← TILBAGE
+                    </button>
+                    
+                    <h2 class="screen-title" data-translate="restaurants">
+                        Restauranter
+                    </h2>
+                </div>
+                
+                <!-- Search and Filter -->
+                <div class="search-section">
+                    <div class="search-bar">
+                        <input type="search"
+                               id="restaurantSearch"
+                               class="search-input"
+                               placeholder="Søg efter restauranter..."
+                               data-translate-placeholder="searchPlaceholder">
+                        <button class="search-btn">🔍</button>
+                    </div>
+                    
+                    <div class="filter-options">
+                        <select id="cuisineFilter" class="filter-select">
+                            <option value="">Alle køkkener</option>
+                            <option value="italian">Italiensk</option>
+                            <option value="chinese">Kinesisk</option>
+                            <option value="danish">Dansk</option>
+                            <option value="indian">Indisk</option>
+                        </select>
+                        
+                        <select id="priceFilter" class="filter-select">
+                            <option value="">Alle priser</option>
+                            <option value="budget">Budget</option>
+                            <option value="moderate">Moderat</option>
+                            <option value="expensive">Dyrt</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- Restaurants List -->
+                <div id="restaurantsList" class="data-list">
+                    <!-- Restaurant cards will be dynamically inserted here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================================
+             SCREEN 4: ACCOMMODATION SCREEN
+             ======================================================================== -->
+        
+        <section id="accommodationScreen" class="screen" data-screen="accommodation" role="tabpanel">
+            <div class="accommodation-screen">
+                <!-- Screen Header -->
+                <div class="navigation-header">
+                    <button class="btn btn-ghost back-button" 
+                            id="backBtn"
+                            data-back-to="restaurantScreen">
+                        ← TILBAGE
+                    </button>
+                    
+                    <h2 class="screen-title" data-translate="accommodation">
+                        Overnatning
+                    </h2>
+                </div>
+                
+                <!-- Search and Filter -->
+                <div class="search-section">
+                    <div class="search-bar">
+                        <input type="search"
+                               id="accommodationSearch"
+                               class="search-input"
+                               placeholder="Søg efter overnatning..."
+                               data-translate-placeholder="searchPlaceholder">
+                        <button class="search-btn">🔍</button>
+                    </div>
+                    
+                    <div class="filter-options">
+                        <select id="typeFilter" class="filter-select">
+                            <option value="">Alle typer</option>
+                            <option value="hotel">Hotel</option>
+                            <option value="hostel">Hostel</option>
+                            <option value="guest_house">Gæstehus</option>
+                            <option value="motel">Motel</option>
+                        </select>
+                        
+                        <select id="amenitiesFilter" class="filter-select">
+                            <option value="">Alle faciliteter</option>
+                            <option value="wifi">WiFi</option>
+                            <option value="parking">Parkering</option>
+                            <option value="breakfast">Morgenmad</option>
+                            <option value="pool">Pool</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- Accommodations List -->
+                <div id="accommodationsList" class="data-list">
+                    <!-- Accommodation cards will be dynamically inserted here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================================
+             SCREEN 5: SIGHTS SCREEN
+             ======================================================================== -->
+        
+        <section id="sightsScreen" class="screen" data-screen="sights" role="tabpanel">
+            <div class="sights-screen">
+                <!-- Screen Header -->
+                <div class="navigation-header">
+                    <button class="btn btn-ghost back-button" 
+                            id="backBtn"
+                            data-back-to="accommodationScreen">
+                        ← TILBAGE
+                    </button>
+                    
+                    <h2 class="screen-title" data-translate="sights">
+                        Seværdigheder
+                    </h2>
+                </div>
+                
+                <!-- Search and Filter -->
+                <div class="search-section">
+                    <div class="search-bar">
+                        <input type="search"
+                               id="sightsSearch"
+                               class="search-input"
+                               placeholder="Søg efter seværdigheder..."
+                               data-translate-placeholder="searchPlaceholder">
+                        <button class="search-btn">🔍</button>
+                    </div>
+                    
+                    <div class="filter-options">
+                        <select id="categoryFilter" class="filter-select">
+                            <option value="">Alle kategorier</option>
+                            <option value="attraction">Attraktion</option>
+                            <option value="museum">Museum</option>
+                            <option value="monument">Monument</option>
+                            <option value="park">Park</option>
+                        </select>
+                        
+                        <select id="distanceFilter" class="filter-select">
+                            <option value="">Alle afstande</option>
+                            <option value="1">Inden for 1 km</option>
+                            <option value="5">Inden for 5 km</option>
+                            <option value="10">Inden for 10 km</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- Sights List -->
+                <div id="sightsList" class="data-list">
+                    <!-- Sight cards will be dynamically inserted here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================================
+             SCREEN 6: SECRETS SCREEN
+             ======================================================================== -->
+        
+        <section id="secretsScreen" class="screen" data-screen="secrets" role="tabpanel">
+            <div class="secrets-screen">
+                <!-- Screen Header -->
+                <div class="navigation-header">
+                    <button class="btn btn-ghost back-button" 
+                            id="backBtn"
+                            data-back-to="sightsScreen">
+                        ← TILBAGE
+                    </button>
+                    
+                    <h2 class="screen-title" data-translate="secrets">
+                        Hemmelige Steder
+                    </h2>
+                </div>
+                
+                <!-- Search Section -->
+                <div class="search-section">
+                    <div class="search-bar">
+                        <input type="search"
+                               id="secretsSearch"
+                               class="search-input"
+                               placeholder="Søg efter hemmelige steder..."
+                               data-translate-placeholder="searchPlaceholder">
+                        <button class="search-btn">🔍</button>
+                    </div>
+                </div>
+                
+                <!-- Secrets List -->
+                <div id="secretsList" class="data-list">
+                    <!-- Secret place cards will be dynamically inserted here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================================
+             SCREEN 7: IMAGES SCREEN
+             ======================================================================== -->
+        
+        <section id="imagesScreen" class="screen" data-screen="images" role="tabpanel">
+            <div class="images-screen">
+                <!-- Screen Header -->
+                <div class="navigation-header">
+                    <button class="btn btn-ghost back-button" 
+                            id="backBtn"
+                            data-back-to="secretsScreen">
+                        ← TILBAGE
+                    </button>
+                    
+                    <h2 class="screen-title" data-translate="images">
+                        Billeder
+                    </h2>
+                </div>
+                
+                <!-- Gallery Controls -->
+                <div class="gallery-controls">
+                    <div class="view-options">
+                        <button class="view-btn active" data-view="grid">⚏ Gitter</button>
+                        <button class="view-btn" data-view="list">☰ Liste</button>
+                    </div>
+                    
+                    <div class="sort-options">
+                        <select id="imageSort" class="sort-select">
+                            <option value="recent">Nyeste først</option>
+                            <option value="popular">Mest populære</option>
+                            <option value="rating">Bedst bedømte</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- Images Gallery -->
+                <div id="imagesList" class="data-list image-gallery">
+                    <!-- Image cards will be dynamically inserted here -->
+                </div>
+                
+                <!-- Load More -->
+                <div class="load-more-section">
+                    <button id="loadMoreImages" class="btn btn-outline">
+                        Indlæs flere billeder
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================================
+             SCREEN 8: LOADING SCREEN (FOR DYNAMIC LOADING)
+             ======================================================================== -->
+        
+        <section id="loadingScreen" class="screen" data-screen="loading" role="tabpanel">
+            <div class="loading-content-main">
+                <div class="loading-spinner-large">
+                    <svg role="img" aria-label="Indlæser data">
+                        <use href="#icon-loading"></use>
+                    </svg>
+                </div>
+                <h2 data-translate="loading">Indlæser...</h2>
+                <p id="loadingMessage" data-translate="loading">Forbereder dine rejseoplysninger</p>
+                
+                <!-- Progress Indicators -->
+                <div class="loading-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+                    <span id="progressPercent">0%</span>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- =============================================================================
+         8. DYNAMIC MESSAGE CONTAINER
+         ============================================================================= -->
+    
+    <div id="messageContainer" class="message-container" role="status" aria-live="polite">
+        <!-- Success, error, warning, and info messages will be inserted here -->
+    </div>
+
+    <!-- =============================================================================
+         9. BOTTOM NAVIGATION (MOBILE OPTIMIZED)
+         ============================================================================= -->
+    
+    <nav class="bottom-nav" role="navigation" aria-label="Hovednavigation">
+        <div class="nav-container">
+            <button class="nav-item active" data-screen="startScreen" data-translate="home">
+                <svg class="nav-icon" role="img" aria-label="Hjem">
+                    <use href="#icon-home"></use>
+                </svg>
+                <span class="nav-label">Hjem</span>
+            </button>
+            
+            <button class="nav-item" data-screen="transportScreen" data-translate="transport">
+                <svg class="nav-icon" role="img" aria-label="Transport">
+                    <use href="#icon-transport"></use>
+                </svg>
+                <span class="nav-label">Transport</span>
+            </button>
+            
+            <button class="nav-item" data-screen="restaurantScreen" data-translate="restaurants">
+                <svg class="nav-icon" role="img" aria-label="Restauranter">
+                    <use href="#icon-restaurant"></use>
+                </svg>
+                <span class="nav-label">Restaurant</span>
+            </button>
+            
+            <button class="nav-item" data-screen="accommodationScreen" data-translate="accommodation">
+                <svg class="nav-icon" role="img" aria-label="Overnatning">
+                    <use href="#icon-hotel"></use>
+                </svg>
+                <span class="nav-label">Hotel</span>
+            </button>
+            
+            <button class="nav-item" data-screen="sightsScreen" data-translate="sights">
+                <svg class="nav-icon" role="img" aria-label="Seværdigheder">
+                    <use href="#icon-sight"></use>
+                </svg>
+                <span class="nav-label">Seværdigheder</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- =============================================================================
+         10. JAVASCRIPT LOADING (CORRECT ORDER FOR DEPENDENCIES)
+         ============================================================================= -->
+    
+    <!-- Translation System (First Dependency) -->
     <script src="translations.js"></script>
+    
+    <!-- UI Components (Second Dependency) -->
     <script src="components.js"></script>
+    
+    <!-- Main Application (Third Dependency) -->
     <script src="script.js"></script>
+    
+    <!-- =============================================================================
+         11. PERFORMANCE & ANALYTICS (DEVELOPMENT MODE)
+         ============================================================================= -->
+    
+    <!-- Development Analytics (Remove in production) -->
+    <script>
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+            // Performance monitoring
+            window.addEventListener('load', () => {
+                const perfData = performance.getEntriesByType('navigation')[0];
+                console.log('🚀 Performance Metrics:', {
+                    loadTime: perfData.loadEventEnd - perfData.fetchStart,
+                    domReady: perfData.domContentLoadedEventEnd - perfData.fetchStart,
+                    domComplete: perfData.domComplete - perfData.fetchStart
+                });
+            });
+            
+            // Error monitoring
+            window.addEventListener('error', (e) => {
+                console.error('🚨 JavaScript Error:', {
+                    message: e.message,
+                    filename: e.filename,
+                    lineno: e.lineno,
+                    colno: e.colno
+                });
+            });
+        }
+        
+        // Service Worker Registration (Progressive Web App)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('✅ ServiceWorker registered:', registration);
+                    })
+                    .catch(error => {
+                        console.log('❌ ServiceWorker registration failed:', error);
+                    });
+            });
+        }
+    </script>
+
+    <!-- =============================================================================
+         12. NOSCRIPT FALLBACK (BROWSERS WITHOUT JAVASCRIPT)
+         ============================================================================= -->
+    
+    <noscript>
+        <div class="noscript-fallback">
+            <h1>JavaScript Krævet</h1>
+            <p>Denne applikation kræver JavaScript for at fungere korrekt.</p>
+            <p>Venligst aktiver JavaScript i din browser og genindlæs siden.</p>
+            <a href="https://www.enable-javascript.com/" target="_blank" rel="noopener">
+                Lær hvordan du aktiverer JavaScript
+            </a>
+        </div>
+        
+        <style>
+            .noscript-fallback {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: white;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                padding: 20px;
+                text-align: center;
+                font-family: Arial, sans-serif;
+                z-index: 99999;
+            }
+            
+            .noscript-fallback h1 {
+                color: #f44336;
+                margin-bottom: 20px;
+            }
+            
+            .noscript-fallback a {
+                color: #2196F3;
+                text-decoration: none;
+                font-weight: bold;
+            }
+            
+            .noscript-fallback a:hover {
+                text-decoration: underline;
+            }
+            
+            /* Hide all app content when JS is disabled */
+            body > :not(.noscript-fallback) {
+                display: none !important;
+            }
+        </style>
+    </noscript>
+
 </body>
 </html>
