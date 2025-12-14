@@ -1,6 +1,6 @@
-// UI Komponenter til Rejse Assistent
+// === UI KOMPONENTER KLASSE ===
 class TravelComponents {
-    // Loading spinner
+    // === LOADING KOMPONENTER SEKTION ===
     static showLoading(container) {
         container.innerHTML = `
             <div class="loading">
@@ -10,7 +10,6 @@ class TravelComponents {
         `;
     }
     
-    // Fejl besked
     static showError(container, message = null) {
         container.innerHTML = `
             <div class="error-message">
@@ -20,7 +19,6 @@ class TravelComponents {
         `;
     }
     
-    // Ingen resultater
     static showNoResults(container) {
         container.innerHTML = `
             <div class="no-results">
@@ -30,7 +28,7 @@ class TravelComponents {
         `;
     }
     
-    // Restaurant kort
+    // === RESTAURANT KORT SEKTION ===
     static createRestaurantCard(restaurant) {
         const mapsUrl = `https://maps.google.com/?q=${restaurant.lat},${restaurant.lon}`;
         return `
@@ -51,7 +49,7 @@ class TravelComponents {
         `;
     }
     
-    // Overnatning kort
+    // === OVERNATNING KORT SEKTION ===
     static createAccommodationCard(accommodation) {
         const mapsUrl = `https://maps.google.com/?q=${accommodation.lat},${accommodation.lon}`;
         return `
@@ -72,7 +70,7 @@ class TravelComponents {
         `;
     }
     
-    // Seværdighed kort
+    // === SEVÆRDIGHED KORT SEKTION ===
     static createSightCard(sight, index) {
         const mapsUrl = `https://maps.google.com/?q=${sight.lat},${sight.lon}`;
         return `
@@ -93,7 +91,7 @@ class TravelComponents {
         `;
     }
     
-    // Hemmeligt sted kort
+    // === HEMMELIGT STED KORT SEKTION ===
     static createSecretCard(place, index) {
         const mapsUrl = `https://maps.google.com/?q=${place.lat},${place.lon}`;
         return `
@@ -112,7 +110,7 @@ class TravelComponents {
         `;
     }
     
-    // Billede galleri
+    // === BILLEDE GALLERI SEKTION ===
     static createImageGallery(images) {
         if (!images || images.length === 0) {
             return `
@@ -136,7 +134,7 @@ class TravelComponents {
         `;
     }
     
-    // Rute resultat
+    // === RUTE RESULTAT SEKTION ===
     static createRouteResult(route) {
         if (route.error) {
             return `<div class="route-error"><p>${route.error}</p></div>`;
@@ -154,7 +152,7 @@ class TravelComponents {
         `;
     }
     
-    // By info kort
+    // === BY INFO KORT SEKTION ===
     static createCityInfo(cityInfo, weather) {
         let weatherHTML = '';
         if (weather) {
@@ -179,23 +177,36 @@ class TravelComponents {
             </div>
         `;
     }
+    
+    // === VEJR KORT SEKTION ===
+    static createWeatherCard(weather) {
+        return `
+            <div class="weather-card">
+                <h3><i class="fas fa-cloud-sun"></i> Vejr i ${window.travelApp.currentCity}</h3>
+                <div class="weather-info">
+                    <div class="temp">${weather.temp}°C</div>
+                    <div class="description">${weather.description}</div>
+                </div>
+                <div class="weather-icon">
+                    <img src="https://openweathermap.org/img/wn/${weather.icon}@2x.png" alt="${weather.description}">
+                </div>
+            </div>
+        `;
+    }
 }
 
-// Hjelpe funktioner
+// === HJÆLP FUNKTIONER SEKTION ===
 function showScreen(screenId) {
-    // Skjul alle skærme
     document.querySelectorAll('.screen').forEach(screen => {
         screen.classList.remove('active');
     });
     
-    // Vis den valgte skærm
     const targetScreen = document.getElementById(screenId);
     if (targetScreen) {
         targetScreen.classList.add('active');
     }
 }
 
-// Aktiver menu knap
 function activateMenuButton(dataFeature) {
     document.querySelectorAll('.menu-btn').forEach(btn => {
         btn.classList.remove('active');
@@ -207,7 +218,6 @@ function activateMenuButton(dataFeature) {
     }
 }
 
-// Nulstil form
 function resetForm(formId) {
     const form = document.getElementById(formId);
     if (form) {
@@ -215,7 +225,6 @@ function resetForm(formId) {
     }
 }
 
-// Get form data
 function getFormData(formId) {
     const form = document.getElementById(formId);
     if (!form) return {};
@@ -230,13 +239,11 @@ function getFormData(formId) {
     return formData;
 }
 
-// Format dato
 function formatDate(dateString) {
     const date = new Date(dateString);
     return date.toLocaleDateString(currentLanguage === 'da' ? 'da-DK' : 'en-US');
 }
 
-// Valider form
 function validateForm(formData, requiredFields = []) {
     const errors = [];
     
@@ -246,7 +253,6 @@ function validateForm(formData, requiredFields = []) {
         }
     });
     
-    // Valider dato
     if (formData.startDate) {
         const startDate = new Date(formData.startDate);
         const today = new Date();
@@ -257,7 +263,6 @@ function validateForm(formData, requiredFields = []) {
         }
     }
     
-    // Valider antal dage
     if (formData.days) {
         const days = parseInt(formData.days);
         if (isNaN(days) || days < 1 || days > 30) {
@@ -268,13 +273,12 @@ function validateForm(formData, requiredFields = []) {
     return errors;
 }
 
-// Google Maps link
 function createMapsLink(lat, lon, name = '') {
     const query = name ? `${name} ${lat} ${lon}` : `${lat} ${lon}`;
     return `https://maps.google.com/?q=${encodeURIComponent(query)}`;
 }
 
-// Storage funktioner
+// === STORAGE FUNKTIONER SEKTION ===
 class AppStorage {
     static saveTrip(tripData) {
         const trips = this.getTrips();
@@ -310,7 +314,7 @@ class AppStorage {
     }
 }
 
-// Export
+// === EKSPORT SEKTION ===
 window.TravelComponents = TravelComponents;
 window.ScreenUtils = {
     showScreen,
