@@ -14,7 +14,8 @@ class TravelComponents {
         container.innerHTML = `
             <div class="error-message">
                 <i class="fas fa-exclamation-triangle"></i>
-                <p>${message || t('error')}</p>
+                <h3>Der opstod en fejl</h3>
+                <p>${message || 'Prøv venligst igen senere. API'en er midlertidigt utilgængelig.'}</p>
             </div>
         `;
     }
@@ -23,7 +24,8 @@ class TravelComponents {
         container.innerHTML = `
             <div class="no-results">
                 <i class="fas fa-search"></i>
-                <p>${t('noResults')}</p>
+                <h3>Ingen resultater fundet</h3>
+                <p>Prøv at ændre din søgning eller kontakt os hvis problemet fortsætter.</p>
             </div>
         `;
     }
