@@ -1,13 +1,10 @@
 // === REJSE ASSISTENT APP ===
-// Denne fil indeholder hele app-logikken og funktionaliteten
-
 class TravelApp {
     constructor() {
-        // === APP INITIALISERING SEKTION ===
         this.currentLanguage = 'da';
         this.currentTrip = null;
         this.currentCity = '';
-        this.translations = translations; // Bruger translations fra translations.js
+        this.translations = translations;
         this.init();
     }
 
@@ -15,9 +12,10 @@ class TravelApp {
         this.loadTrip();
         this.setupEventListeners();
         this.updateUI();
+        // Sørg for at start skærmen vises
+        this.showScreen('startScreen');
     }
 
-    // === EVENT LISTENERS SEKTION ===
     setupEventListeners() {
         // Sprogskifte
         const languageSelect = document.getElementById('selectLanguage');
@@ -54,7 +52,6 @@ class TravelApp {
         });
     }
 
-    // === MENU HÅNDTERING SEKTION ===
     handleMenuClick(feature) {
         if (!this.currentCity) {
             alert(this.translations[this.currentLanguage].selectDestinationFirst);
@@ -110,7 +107,6 @@ class TravelApp {
         }
     }
 
-    // === START REJSE SEKTION ===
     startTrip() {
         const formData = this.getFormData('startScreen');
         const errors = this.validateForm(formData, ['destination', 'startDate', 'days']);
@@ -144,7 +140,6 @@ class TravelApp {
             });
     }
 
-    // === FORM HÅNDTERING SEKTION ===
     geocodeCity(cityName) {
         return new Promise((resolve, reject) => {
             // Simuler API kald - udskift med rigtig API kald
@@ -183,7 +178,6 @@ class TravelApp {
         return errors;
     }
 
-    // === UI OPDATERING SEKTION ===
     updateUI() {
         // Opdater alle tekster
         document.querySelectorAll('[data-translate]').forEach(element => {
@@ -223,7 +217,6 @@ class TravelApp {
         }
     }
 
-    // === SKÆRM HÅNDTERING SEKTION ===
     showScreen(screenId) {
         document.querySelectorAll('.screen').forEach(screen => {
             screen.style.display = 'none';
@@ -231,6 +224,9 @@ class TravelApp {
         const targetScreen = document.getElementById(screenId);
         if (targetScreen) {
             targetScreen.style.display = 'block';
+            console.log('Showing screen:', screenId);
+        } else {
+            console.error('Screen not found:', screenId);
         }
     }
 
@@ -238,7 +234,6 @@ class TravelApp {
         this.showScreen('mainMenu');
     }
 
-    // === DATA LAGRING SEKTION ===
     saveTrip() {
         localStorage.setItem('currentTrip', JSON.stringify(this.currentTrip));
     }
@@ -263,7 +258,7 @@ class TravelApp {
         }
     }
 
-    // === DATA HENTING FUNKTIONER SEKTION ===
+    // === LOADING FUNKTIONER ===
     async loadRestaurants() {
         const detailContent = document.getElementById('detailContent');
         if (!detailContent) return;
@@ -410,13 +405,119 @@ class TravelApp {
     }
 }
 
-// === APP INITIALISERING SEKTION ===
+// === TRAVEL COMPONENTS ===
+const TravelComponents = {
+    showLoading: function(container) {
+        container.innerHTML = `
+            <div class="loading">
+                <div class="spinner"></div>
+                <p>${translations.da.loading}</p>
+            </div>
+        `;
+    },
+
+    showNoResults: function(container) {
+        container.innerHTML = `
+            <div class="no-results">
+                <p>${translations.da.noResults}</p>
+            </div>
+        `;
+    },
+
+    showError: function(container) {
+        container.innerHTML = `
+            <div class="error">
+                <p>${translations.da.error}</p>
+            </div>
+        `;
+    },
+
+    createRestaurantCard: function(restaurant, index) {
+        return `
+            <div class="card">
+                <h3>${restaurant.name}</h3>
+                <p>${restaurant.address}</p>
+                <p>${restaurant.cuisine}</p>
+                <div class="card-actions">
+                    <button class="btn primary">Se mere</button>
+                </div>
+            </div>
+        `;
+    },
+
+    createAccommodationCard: function(place, index) {
+        return `
+            <div class="card">
+                <h3>${place.name}</h3>
+                <p>${place.address}</p>
+                <p>${place.type}</p>
+                <div class="card-actions">
+                    <button class="btn primary">Se mere</button>
+                </div>
+            </div>
+        `;
+    },
+
+    createSightCard: function(sight, index) {
+        return `
+            <div class="card">
+                <h3>${sight.name}</h3>
+                <p>${sight.description}</p>
+                <div class="card-actions">
+                    <button class="btn primary">Se mere</button>
+                </div>
+            </div>
+        `;
+    },
+
+    createSecretCard: function(secret, index) {
+        return `
+            <div class="card">
+                <h3>${secret.name}</h3>
+                <p>${secret.description}</p>
+                <div class="card-actions">
+                    <button class="btn primary">Se mere</button>
+                </div>
+            </div>
+        `;
+    },
+
+    createImageCard: function(image, index) {
+        return `
+            <div class="card">
+                <img src="${image.url}" alt="${image.description}" class="image-card">
+                <p>${image.description}</p>
+                <div class="card-actions">
+                    <button class="btn primary">Se mere</button>
+                </div>
+            </div>
+        `;
+    },
+
+    createWeatherCard: function(weather) {
+        return `
+            <div class="weather-card">
+                <h3>🌤️ Vejr i ${window.travelApp.currentCity}</h3>
+                <div class="weather-info">
+                    <div class="temp">${weather.temp}°C</div>
+                    <div class="description">${weather.description}</div>
+                </div>
+                <div class="weather-icon">
+                    <img src="https://openweathermap.org/img/wn/${weather.icon}@2x.png" alt="${weather.description}">
+                </div>
+            </div>
+        `;
+    }
+};
+
+// === APP INITIALISERING ===
 document.addEventListener('DOMContentLoaded', () => {
     const app = new TravelApp();
     window.travelApp = app; // Gør appen globalt tilgængelig
+    console.log('App fully initialized and ready');
 });
 
-// === HELPER FUNKTIONER SEKTION ===
+// === HELPER FUNKTIONER ===
 function activateMenuButton(feature) {
     document.querySelectorAll('.menu-btn').forEach(btn => {
         btn.classList.remove('active');
