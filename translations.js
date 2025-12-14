@@ -35,7 +35,7 @@ const translations = {
         weather: 'Vejr'
     },
     en: {
-        appTitle: 'TRAVEL ASSISTANT',
+        appTitle: 'TRAVEL ASSISTENT',
         destination: 'Destination City',
         startDate: 'Start Date',
         days: 'Number of Days',
