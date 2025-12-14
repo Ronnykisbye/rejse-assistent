@@ -58,7 +58,7 @@ async function findRestaurants(lat, lon, radius = 2000) {
     }
 }
 
-// === OVERNATNING SØGNING SEKTION ===
+// === OVERNATNING SØGNING SEKTION (forbedret med fejlhåndtering) ===
 async function findAccommodation(lat, lon, radius = 3000) {
     const query = `
         [out:json][timeout:25];
@@ -74,12 +74,45 @@ async function findAccommodation(lat, lon, radius = 3000) {
     try {
         const response = await fetch(API_CONFIG.overpass, {
             method: 'POST',
-            body: query
+            body: query,
+            headers: {
+                'Content-Type': 'text/plain'
+            }
         });
+        
+        // Tjek om response er gyldig JSON
+        const contentType = response.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+            // Hvis det ikke er JSON, prøv at parse som tekst for at se fejlen
+            const errorText = await response.text();
+            console.error('API returned non-JSON response:', errorText);
+            throw new Error('API returned invalid response format');
+        }
+        
         const data = await response.json();
         return formatPlaces(data.elements);
+        
     } catch (error) {
         console.error('Accommodation search error:', error);
+        
+        // Fallback: Prøv en anden Overpass server
+        try {
+            const fallbackResponse = await fetch('https://overpass-api.de/api/interpreter', {
+                method: 'POST',
+                body: query,
+                headers: {
+                    'Content-Type': 'text/plain'
+                }
+            });
+            
+            if (fallbackResponse.ok) {
+                const data = await fallbackResponse.json();
+                return formatPlaces(data.elements);
+            }
+        } catch (fallbackError) {
+            console.error('Fallback accommodation search also failed:', fallbackError);
+        }
+        
         return [];
     }
 }
