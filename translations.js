@@ -1,5 +1,9 @@
 // === OVERSETTELSER SEKTION ===
+// Denne fil indeholder alle oversættelser for appen
+// Bruges til at vise tekster på dansk og engelsk
+
 const translations = {
+    // === DANSK OVERSETTELSER SEKTION ===
     da: {
         appTitle: 'REJSE ASSISTENT',
         destination: 'Destination By',
@@ -34,6 +38,8 @@ const translations = {
         cityNotFound: 'Kunne ikke finde byen. Prøv venligst igen.',
         weather: 'Vejr'
     },
+    
+    // === ENGELSK OVERSETTELSER SEKTION ===
     en: {
         appTitle: 'TRAVEL ASSISTENT',
         destination: 'Destination City',
