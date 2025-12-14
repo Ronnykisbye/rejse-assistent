@@ -7,7 +7,7 @@ const API_CONFIG = {
 };
 
 const API_KEYS = {
-    openweather: 'din_openweather_key_her'
+    openweather:4fc6c7d240e78becfd0de558b6202af4 
 };
 
 async function geocodeCity(city) {
