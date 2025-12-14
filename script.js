@@ -1,125 +1,58 @@
-// === REJSE ASSISTENT KLASSE ===
+// === REJSE ASSISTENT APP ===
 class TravelApp {
     constructor() {
-        this.currentCity = null;
+        this.currentLanguage = 'da';
         this.currentTrip = null;
-        this.theme = 'dark';
+        this.currentCity = '';
+        this.translations = translations;
         this.init();
     }
-    
-    // === INITIALISERING SEKTION ===
+
     init() {
-        Translations.initLanguage();
-        this.loadSettings();
-        this.bindEvents();
-        this.checkSavedData();
-        console.log('Rejse Assistent initialiseret');
+        this.loadTrip();
+        this.setupEventListeners();
+        this.updateUI();
     }
-    
-    // === EVENT HANDLER BINDING SEKTION ===
-    bindEvents() {
-        const themeBtn = document.getElementById('themeBtn');
-        if (themeBtn) {
-            themeBtn.addEventListener('click', () => this.toggleTheme());
-        }
-        
-        const langSelect = document.getElementById('languageSelect');
-        if (langSelect) {
-            langSelect.addEventListener('change', (e) => {
-                Translations.setLanguage(e.target.value);
+
+    setupEventListeners() {
+        // Sprogskifte
+        const languageSelect = document.getElementById('selectLanguage');
+        if (languageSelect) {
+            languageSelect.addEventListener('change', (e) => {
+                this.currentLanguage = e.target.value;
+                this.updateUI();
+                this.saveLanguage();
             });
         }
-        
-        const startBtn = document.getElementById('startBtn');
-        if (startBtn) {
-            startBtn.addEventListener('click', () => this.handleStartTravel());
-        }
-        
-        this.bindBackButtons();
-        this.bindMenuButtons();
-        this.bindTransportPlanner();
-    }
-    
-    bindBackButtons() {
-        const backToStart = document.getElementById('backToStart');
-        if (backToStart) {
-            backToStart.addEventListener('click', () => {
-                showScreen('startScreen');
+
+        // Start rejse
+        const startButton = document.getElementById('startTravel');
+        if (startButton) {
+            startButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.startTrip();
             });
         }
-        
-        const backToMenu = document.getElementById('backToMenu');
-        if (backToMenu) {
-            backToMenu.addEventListener('click', () => {
-                showScreen('mainMenu');
-            });
-        }
-        
-        const backFromTransport = document.getElementById('backFromTransport');
-        if (backFromTransport) {
-            backFromTransport.addEventListener('click', () => {
-                showScreen('mainMenu');
-            });
-        }
-    }
-    
-    bindMenuButtons() {
+
+        // Menu-knapper
         document.querySelectorAll('.menu-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
-                const feature = e.currentTarget.getAttribute('data-feature');
-                this.handleMenuClick(feature);
+                const menuType = e.target.dataset.menu;
+                this.handleMenuClick(menuType);
+            });
+        });
+
+        // Tilbage-knapper
+        document.querySelectorAll('.back-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                this.goBack();
             });
         });
     }
-    
-    bindTransportPlanner() {
-        const planRoute = document.getElementById('planRoute');
-        if (planRoute) {
-            planRoute.addEventListener('click', () => this.handlePlanRoute());
-        }
-    }
-    
-    // === REJSE START HÅNDTERING SEKTION ===
-    async handleStartTravel() {
-        const formData = getFormData('startScreen');
-        const errors = validateForm(formData, ['destination', 'startDate', 'days']);
-        
-        if (errors.length > 0) {
-            alert('Fejl:\n' + errors.join('\n'));
-            return;
-        }
-        
-        const cityData = await TravelAPI.geocodeCity(formData.destination);
-        if (!cityData) {
-            alert('Kunne ikke finde byen. Prøv venligst igen.');
-            return;
-        }
-        
-        this.currentTrip = {
-            ...formData,
-            ...cityData
-        };
-        
-        this.currentCity = cityData.display_name.split(',')[0];
-        
-        this.updateCityTitle();
-        showScreen('mainMenu');
-        AppStorage.saveTrip(this.currentTrip);
-        
-        console.log('Trip started:', this.currentTrip);
-    }
-    
-    updateCityTitle() {
-        const cityTitle = document.getElementById('cityTitle');
-        if (cityTitle && this.currentCity) {
-            cityTitle.textContent = `📍 ${this.currentCity}`;
-        }
-    }
-    
-    // === MENU HÅNDTERING SEKTION ===
-    async handleMenuClick(feature) {
+
+    handleMenuClick(feature) {
         if (!this.currentCity) {
-            alert('Vælg venligst en destination først');
+            alert(this.translations[this.currentLanguage].selectDestinationFirst);
             return;
         }
         
@@ -131,326 +64,469 @@ class TravelApp {
         if (!detailContent) return;
         
         const titles = {
-            restaurants: '🍽️ Restauranter',
-            accommodation: '🏨 Overnatning',
-            sights: '📸 Seværdigheder',
-            secrets: '🔓 Hemmelige Steder',
-            images: '🖼️ Billeder',
-            transport: '🚗 Transport',
-            weather: '🌤️ Vejr'
+            restaurants: '🍽️ ' + this.translations[this.currentLanguage].restaurants,
+            accommodation: '🏨 ' + this.translations[this.currentLanguage].accommodation,
+            sights: '📸 ' + this.translations[this.currentLanguage].sights,
+            secrets: '🔓 ' + this.translations[this.currentLanguage].secrets,
+            images: '🖼️ ' + this.translations[this.currentLanguage].images,
+            transport: '🚗 ' + this.translations[this.currentLanguage].transport,
+            weather: '🌤️ ' + this.translations[this.currentLanguage].weather
         };
         
-        if (feature !== 'transport' && detailTitle) {
+        if (detailTitle) {
             detailTitle.textContent = titles[feature] || feature;
         }
         
-        switch (feature) {
+        this.showScreen('detailScreen');
+        
+        // Håndter specifikke funktioner
+        switch(feature) {
             case 'restaurants':
-                await this.loadRestaurants();
+                this.loadRestaurants();
                 break;
             case 'accommodation':
-                await this.loadAccommodation();
+                this.loadAccommodation();
                 break;
             case 'sights':
-                await this.loadSights();
+                this.loadSights();
                 break;
             case 'secrets':
-                await this.loadSecretPlaces();
+                this.loadSecretPlaces();
                 break;
             case 'images':
-                await this.loadImages();
+                this.loadImages();
                 break;
             case 'transport':
-                showScreen('transportPlanner');
+                this.showScreen('transportPlanner');
                 break;
             case 'weather':
-                await this.loadWeather();
+                this.loadWeather();
                 break;
         }
     }
-    
- // === DATA INDHENTNING FUNKTIONER SEKTION (forbedret) ===
-async loadAccommodation() {
-    const detailContent = document.getElementById('detailContent');
-    showScreen('detailScreen');
-    
-    TravelComponents.showLoading(detailContent);
-    
-    try {
-        const accommodation = await TravelAPI.findAccommodation(
-            this.currentTrip.lat, 
-            this.currentTrip.lon
-        );
+
+    startTrip() {
+        const formData = this.getFormData('startScreen');
+        const errors = this.validateForm(formData, ['destination', 'startDate', 'days']);
         
-        if (accommodation.length === 0) {
-            TravelComponents.showNoResults(detailContent);
+        if (errors.length > 0) {
+            alert(this.translations[this.currentLanguage].errors + '\n' + errors.join('\n'));
             return;
         }
-        
-        const accommodationHTML = accommodation
-            .slice(0, 10)
-            .map(a => TravelComponents.createAccommodationCard(a))
-            .join('');
-        
-        detailContent.innerHTML = accommodationHTML;
-        
-    } catch (error) {
-        console.error('Error loading accommodation:', error);
-        
-        // Vis brugervenlig fejlmeddelelse
-        detailContent.innerHTML = `
-            <div class="error-message">
-                <i class="fas fa-exclamation-triangle"></i>
-                <h3>Overnatning søgning fejlede</h3>
-                <p>Overpass API'en er midlertidigt utilgængelig. Prøv igen senere.</p>
-                <p>Alternativt kan du prøve:</p>
-                <ul>
-                    <li>Prøv at søge efter restauranter i stedet</li>
-                    <li>Prøv igen om et par minutter</li>
-                    <li>Kontakt os hvis problemet fortsætter</li>
-                </ul>
-            </div>
-        `;
+
+        // Geocode byen
+        this.geocodeCity(formData.destination)
+            .then(cityData => {
+                if (!cityData) {
+                    alert(this.translations[this.currentLanguage].cityNotFound);
+                    return;
+                }
+
+                this.currentTrip = {
+                    ...formData,
+                    ...cityData
+                };
+                this.currentCity = cityData.display_name.split(',')[0];
+                this.updateCityTitle();
+                this.showScreen('mainMenu');
+                this.saveTrip();
+                console.log('Trip started:', this.currentTrip);
+            })
+            .catch(error => {
+                console.error('Error starting trip:', error);
+                alert(this.translations[this.currentLanguage].error);
+            });
     }
-}
-    
+
+    geocodeCity(cityName) {
+        return new Promise((resolve, reject) => {
+            // Simuler API kald - udskift med rigtig API kald
+            setTimeout(() => {
+                // Eksempel på bydata
+                const mockData = {
+                    display_name: cityName + ', Denmark',
+                    lat: 55.6761,
+                    lon: 12.5683
+                };
+                resolve(mockData);
+            }, 500);
+        });
+    }
+
+    getFormData(formId) {
+        const form = document.getElementById(formId);
+        if (!form) return {};
+        
+        const formData = {};
+        form.querySelectorAll('input, select').forEach(input => {
+            if (input.name) {
+                formData[input.name] = input.value;
+            }
+        });
+        return formData;
+    }
+
+    validateForm(formData, requiredFields) {
+        const errors = [];
+        requiredFields.forEach(field => {
+            if (!formData[field] || formData[field].trim() === '') {
+                errors.push(this.translations[this.currentLanguage][field] + ' ' + this.translations[this.currentLanguage].isRequired);
+            }
+        });
+        return errors;
+    }
+
+    updateUI() {
+        // Opdater alle tekster
+        document.querySelectorAll('[data-translate]').forEach(element => {
+            const key = element.dataset.translate;
+            if (this.translations[this.currentLanguage][key]) {
+                element.textContent = this.translations[this.currentLanguage][key];
+            }
+        });
+
+        // Opdater knapper og labels
+        this.updateFormLabels();
+    }
+
+    updateFormLabels() {
+        const labelMap = {
+            'destination': this.translations[this.currentLanguage].destination,
+            'startDate': this.translations[this.currentLanguage].startDate,
+            'days': this.translations[this.currentLanguage].days,
+            'fromLocation': this.translations[this.currentLanguage].from,
+            'toLocation': this.translations[this.currentLanguage].to,
+            'departureDate': this.translations[this.currentLanguage].departureDate,
+            'departureTime': this.translations[this.currentLanguage].departureTime
+        };
+
+        Object.entries(labelMap).forEach(([id, text]) => {
+            const label = document.querySelector(`label[for="${id}"]`);
+            if (label) {
+                label.textContent = text;
+            }
+        });
+    }
+
+    updateCityTitle() {
+        const cityTitle = document.getElementById('cityTitle');
+        if (cityTitle && this.currentCity) {
+            cityTitle.textContent = this.currentCity;
+        }
+    }
+
+    showScreen(screenId) {
+        document.querySelectorAll('.screen').forEach(screen => {
+            screen.style.display = 'none';
+        });
+        const targetScreen = document.getElementById(screenId);
+        if (targetScreen) {
+            targetScreen.style.display = 'block';
+        }
+    }
+
+    goBack() {
+        this.showScreen('mainMenu');
+    }
+
+    saveTrip() {
+        localStorage.setItem('currentTrip', JSON.stringify(this.currentTrip));
+    }
+
+    loadTrip() {
+        const savedTrip = localStorage.getItem('currentTrip');
+        if (savedTrip) {
+            this.currentTrip = JSON.parse(savedTrip);
+            this.currentCity = this.currentTrip.display_name.split(',')[0];
+            this.updateCityTitle();
+        }
+    }
+
+    saveLanguage() {
+        localStorage.setItem('appLanguage', this.currentLanguage);
+    }
+
+    loadLanguage() {
+        const savedLanguage = localStorage.getItem('appLanguage');
+        if (savedLanguage) {
+            this.currentLanguage = savedLanguage;
+        }
+    }
+
+    // === LOADING FUNKTIONER ===
+    async loadRestaurants() {
+        const detailContent = document.getElementById('detailContent');
+        if (!detailContent) return;
+        
+        showScreen('detailScreen');
+        TravelComponents.showLoading(detailContent);
+        
+        try {
+            const restaurants = await TravelAPI.findRestaurants(
+                this.currentTrip.lat,
+                this.currentTrip.lon
+            );
+            if (restaurants.length > 0) {
+                detailContent.innerHTML = restaurants
+                    .map((restaurant, i) => TravelComponents.createRestaurantCard(restaurant, i))
+                    .join('');
+            } else {
+                TravelComponents.showNoResults(detailContent);
+            }
+        } catch (error) {
+            console.error('Error loading restaurants:', error);
+            TravelComponents.showError(detailContent);
+        }
+    }
+
     async loadAccommodation() {
         const detailContent = document.getElementById('detailContent');
-        showScreen('detailScreen');
+        if (!detailContent) return;
         
+        showScreen('detailScreen');
         TravelComponents.showLoading(detailContent);
         
         try {
             const accommodation = await TravelAPI.findAccommodation(
-                this.currentTrip.lat, 
+                this.currentTrip.lat,
                 this.currentTrip.lon
             );
-            
-            if (accommodation.length === 0) {
+            if (accommodation.length > 0) {
+                detailContent.innerHTML = accommodation
+                    .map((place, i) => TravelComponents.createAccommodationCard(place, i))
+                    .join('');
+            } else {
                 TravelComponents.showNoResults(detailContent);
-                return;
             }
-            
-            const accommodationHTML = accommodation
-                .slice(0, 10)
-                .map(a => TravelComponents.createAccommodationCard(a))
-                .join('');
-            
-            detailContent.innerHTML = accommodationHTML;
-            
         } catch (error) {
             console.error('Error loading accommodation:', error);
             TravelComponents.showError(detailContent);
         }
     }
-    
+
     async loadSights() {
         const detailContent = document.getElementById('detailContent');
-        showScreen('detailScreen');
+        if (!detailContent) return;
         
+        showScreen('detailScreen');
         TravelComponents.showLoading(detailContent);
         
         try {
-            const cityInfo = await TravelAPI.getWikipediaInfo(this.currentCity);
             const sights = await TravelAPI.findSights(
-                this.currentTrip.lat, 
+                this.currentTrip.lat,
                 this.currentTrip.lon
             );
-            
-            if (sights.length === 0 && !cityInfo) {
-                TravelComponents.showNoResults(detailContent);
-                return;
-            }
-            
-            let html = '';
-            
-            if (cityInfo) {
-                const weather = await TravelAPI.getWeather(this.currentTrip.lat, this.currentTrip.lon);
-                html += TravelComponents.createCityInfo(cityInfo, weather);
-            }
-            
             if (sights.length > 0) {
-                html += '<h3><i class="fas fa-camera"></i> Top 10 Seværdigheder</h3>';
-                html += sights
-                    .slice(0, 10)
-                    .map((s, i) => TravelComponents.createSightCard(s, i))
+                detailContent.innerHTML = sights
+                    .map((sight, i) => TravelComponents.createSightCard(sight, i))
                     .join('');
+            } else {
+                TravelComponents.showNoResults(detailContent);
             }
-            
-            detailContent.innerHTML = html || '<p>Ingen seværdigheder fundet</p>';
-            
         } catch (error) {
             console.error('Error loading sights:', error);
             TravelComponents.showError(detailContent);
         }
     }
-    
+
     async loadSecretPlaces() {
         const detailContent = document.getElementById('detailContent');
-        showScreen('detailScreen');
+        if (!detailContent) return;
         
+        showScreen('detailScreen');
         TravelComponents.showLoading(detailContent);
         
         try {
             const secrets = await TravelAPI.findSecretPlaces(
-                this.currentTrip.lat, 
+                this.currentTrip.lat,
                 this.currentTrip.lon
             );
-            
-            if (secrets.length === 0) {
+            if (secrets.length > 0) {
+                detailContent.innerHTML = secrets
+                    .map((s, i) => TravelComponents.createSecretCard(s, i))
+                    .join('');
+            } else {
                 TravelComponents.showNoResults(detailContent);
-                return;
             }
-            
-            const secretsHTML = secrets
-                .map((s, i) => TravelComponents.createSecretCard(s, i))
-                .join('');
-            
-            detailContent.innerHTML = `
-                <h3><i class="fas fa-key"></i> 5 Hemmelige Steder</h3>
-                <p>Disse steder er mindre kendte af turister!</p>
-                ${secretsHTML}
-            `;
-            
         } catch (error) {
             console.error('Error loading secrets:', error);
             TravelComponents.showError(detailContent);
         }
     }
-    
+
     async loadImages() {
         const detailContent = document.getElementById('detailContent');
-        showScreen('detailScreen');
+        if (!detailContent) return;
         
+        showScreen('detailScreen');
         TravelComponents.showLoading(detailContent);
         
         try {
             const images = await TravelAPI.getCityImages(this.currentCity);
-            const galleryHTML = TravelComponents.createImageGallery(images);
-            
-            detailContent.innerHTML = `
-                <h3><i class="fas fa-images"></i> Billeder fra ${this.currentCity}</h3>
-                ${galleryHTML}
-            `;
-            
+            if (images.length > 0) {
+                detailContent.innerHTML = images
+                    .map((img, i) => TravelComponents.createImageCard(img, i))
+                    .join('');
+            } else {
+                TravelComponents.showNoResults(detailContent);
+            }
         } catch (error) {
             console.error('Error loading images:', error);
             TravelComponents.showError(detailContent);
         }
     }
-    
+
     async loadWeather() {
         const detailContent = document.getElementById('detailContent');
-        showScreen('detailScreen');
+        if (!detailContent) return;
         
+        showScreen('detailScreen');
         TravelComponents.showLoading(detailContent);
         
         try {
             const weather = await TravelAPI.getWeather(
-                this.currentTrip.lat, 
+                this.currentTrip.lat,
                 this.currentTrip.lon
             );
-            
             if (weather) {
                 detailContent.innerHTML = TravelComponents.createWeatherCard(weather);
             } else {
                 TravelComponents.showNoResults(detailContent);
             }
-            
         } catch (error) {
             console.error('Error loading weather:', error);
             TravelComponents.showError(detailContent);
         }
     }
-    
-    // === TRANSPORT HÅNDTERING SEKTION ===
-    async handlePlanRoute() {
-        const formData = getFormData('transportPlanner');
-        const errors = validateForm(formData, ['fromLocation', 'toLocation']);
-        
-        if (errors.length > 0) {
-            alert('Fejl:\n' + errors.join('\n'));
-            return;
-        }
-        
-        const planBtn = document.getElementById('planRoute');
-        const routeResult = document.getElementById('routeResult');
-        
-        planBtn.disabled = true;
-        planBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Planlægger...';
-        routeResult.classList.remove('show');
-        
-        try {
-            const route = await TravelAPI.planRoute(
-                formData.fromLocation, 
-                formData.toLocation
-            );
-            
-            routeResult.innerHTML = TravelComponents.createRouteResult(route);
-            routeResult.classList.add('show');
-            
-        } catch (error) {
-            console.error('Error planning route:', error);
-            routeResult.innerHTML = '<div class="route-error"><p>Route planning failed</p></div>';
-            routeResult.classList.add('show');
-        } finally {
-            planBtn.disabled = false;
-            planBtn.innerHTML = '<i class="fas fa-route"></i> PLANLÆG RUTE';
-        }
-    }
-    
-    // === THEME HÅNDTERING SEKTION ===
-    toggleTheme() {
-        this.theme = this.theme === 'dark' ? 'light' : 'dark';
-        document.body.className = this.theme + '-mode';
-        
-        const themeBtn = document.getElementById('themeBtn');
-        const icon = themeBtn.querySelector('i');
-        
-        if (this.theme === 'light') {
-            icon.className = 'fas fa-sun';
-        } else {
-            icon.className = 'fas fa-moon';
-        }
-        
-        AppStorage.saveSettings({
-            theme: this.theme,
-            language: Translations.currentLanguage()
-        });
-    }
-    
-    // === SETTINGS HÅNDTERING SEKTION ===
-    loadSettings() {
-        const settings = AppStorage.getSettings();
-        this.theme = settings.theme;
-        document.body.className = this.theme + '-mode';
-        
-        const themeBtn = document.getElementById('themeBtn');
-        if (themeBtn) {
-            const icon = themeBtn.querySelector('i');
-            icon.className = this.theme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
-        }
-    }
-    
-    // === DATA CHECK SEKTION ===
-    checkSavedData() {
-        const trips = AppStorage.getTrips();
-        if (trips.length > 0) {
-            console.log('Fundet gemte trips:', trips.length);
-        }
-    }
 }
 
-// === APP INITIALISERING SEKTION ===
+// === TRAVEL COMPONENTS ===
+const TravelComponents = {
+    showLoading: function(container) {
+        container.innerHTML = `
+            <div class="loading">
+                <div class="spinner"></div>
+                <p>${translations.da.loading}</p>
+            </div>
+        `;
+    },
+
+    showNoResults: function(container) {
+        container.innerHTML = `
+            <div class="no-results">
+                <p>${translations.da.noResults}</p>
+            </div>
+        `;
+    },
+
+    showError: function(container) {
+        container.innerHTML = `
+            <div class="error">
+                <p>${translations.da.error}</p>
+            </div>
+        `;
+    },
+
+    createRestaurantCard: function(restaurant, index) {
+        return `
+            <div class="card">
+                <h3>${restaurant.name}</h3>
+                <p>${restaurant.address}</p>
+                <p>${restaurant.cuisine}</p>
+                <div class="card-actions">
+                    <button class="btn primary">Se mere</button>
+                </div>
+            </div>
+        `;
+    },
+
+    createAccommodationCard: function(place, index) {
+        return `
+            <div class="card">
+                <h3>${place.name}</h3>
+                <p>${place.address}</p>
+                <p>${place.type}</p>
+                <div class="card-actions">
+                    <button class="btn primary">Se mere</button>
+                </div>
+            </div>
+        `;
+    },
+
+    createSightCard: function(sight, index) {
+        return `
+            <div class="card">
+                <h3>${sight.name}</h3>
+                <p>${sight.description}</p>
+                <div class="card-actions">
+                    <button class="btn primary">Se mere</button>
+                </div>
+            </div>
+        `;
+    },
+
+    createSecretCard: function(secret, index) {
+        return `
+            <div class="card">
+                <h3>${secret.name}</h3>
+                <p>${secret.description}</p>
+                <div class="card-actions">
+                    <button class="btn primary">Se mere</button>
+                </div>
+            </div>
+        `;
+    },
+
+    createImageCard: function(image, index) {
+        return `
+            <div class="card">
+                <img src="${image.url}" alt="${image.description}" class="image-card">
+                <p>${image.description}</p>
+                <div class="card-actions">
+                    <button class="btn primary">Se mere</button>
+                </div>
+            </div>
+        `;
+    },
+
+    createWeatherCard: function(weather) {
+        return `
+            <div class="weather-card">
+                <h3>🌤️ Vejr i ${window.travelApp.currentCity}</h3>
+                <div class="weather-info">
+                    <div class="temp">${weather.temp}°C</div>
+                    <div class="description">${weather.description}</div>
+                </div>
+                <div class="weather-icon">
+                    <img src="https://openweathermap.org/img/wn/${weather.icon}@2x.png" alt="${weather.description}">
+                </div>
+            </div>
+        `;
+    }
+};
+
+// === APP INITIALISERING ===
 document.addEventListener('DOMContentLoaded', () => {
-    window.travelApp = new TravelApp();
+    const app = new TravelApp();
+    window.travelApp = app; // Gør appen globalt tilgængelig
 });
 
-// === ERROR HANDLING SEKTION ===
-window.addEventListener('error', (e) => {
-    console.error('App error:', e.error);
-});
+// === HELPER FUNKTIONER ===
+function activateMenuButton(feature) {
+    document.querySelectorAll('.menu-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.dataset.menu === feature) {
+            btn.classList.add('active');
+        }
+    });
+}
 
-// === SERVICE WORKER SEKTION (valgfri) ===
-if ('serviceWorker' in navigator) {
+function showScreen(screenId) {
+    document.querySelectorAll('.screen').forEach(screen => {
+        screen.style.display = 'none';
+    });
+    const targetScreen = document.getElementById(screenId);
+    if (targetScreen) {
+        targetScreen.style.display = 'block';
+    }
 }
