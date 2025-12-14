@@ -1,152 +1,98 @@
 <!DOCTYPE html>
 <html lang="da">
 <head>
-    <!-- === HEAD SEKTION === -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rejse Assistent</title>
+    <title data-translate="appTitle">REJSE ASSISTENT</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
-    <div id="app">
-        <!-- === START SKÆRM SEKTION === -->
-        <div id="startScreen" class="screen active">
-            <div class="header">
-                <h1 class="neon-title">🌍 REJSE ASSISTENT</h1>
-                <div class="theme-toggle">
-                    <button id="themeBtn" class="neon-btn">
-                        <i class="fas fa-moon"></i>
-                    </button>
-                </div>
+    <div class="app-container">
+        <!-- Start skærm -->
+        <div id="startScreen" class="screen">
+            <h1 data-translate="appTitle">REJSE ASSISTENT</h1>
+            
+            <div class="input-group">
+                <label for="destination" data-translate="destination">Destination</label>
+                <input type="text" id="destination" name="destination" required>
             </div>
             
-            <div class="start-form">
-                <div class="input-group">
-                    <label for="destination">Destination By</label>
-                    <input type="text" id="destination" placeholder="f.eks. Berlin">
-                </div>
-                
-                <div class="date-row">
-                    <div class="input-group">
-                        <label for="startDate">Start dato</label>
-                        <input type="date" id="startDate">
-                    </div>
-                    <div class="input-group">
-                        <label for="days">Antal dage</label>
-                        <input type="number" id="days" min="1" max="30" placeholder="7">
-                    </div>
-                </div>
-                
-                <div class="language-selector">
-                    <label>Vælg sprog:</label>
-                    <select id="languageSelect">
-                        <option value="da">🇩🇰 Dansk</option>
-                        <option value="en">🇬🇧 English</option>
-                        <option value="de">🇩🇪 Deutsch</option>
-                        <option value="pl">🇵🇱 Polski</option>
-                        <option value="lt">🇱🇹 Lietuviškai</option>
-                    </select>
-                </div>
-                
-                <button id="startBtn" class="neon-btn large">
-                    <i class="fas fa-rocket"></i> START REJSE
-                </button>
+            <div class="input-group">
+                <label for="startDate" data-translate="startDate">Start dato</label>
+                <input type="date" id="startDate" name="startDate" required>
             </div>
+            
+            <div class="input-group">
+                <label for="days" data-translate="days">Antal dage</label>
+                <input type="number" id="days" name="days" min="1" max="30" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="selectLanguage" data-translate="selectLanguage">Vælg sprog</label>
+                <select id="selectLanguage" name="selectLanguage">
+                    <option value="da">Dansk</option>
+                    <option value="en">English</option>
+                </select>
+            </div>
+            
+            <button id="startTravel" data-translate="startTravel" class="btn primary">START REJSE</button>
         </div>
 
-        <!-- === HOVEDMENU SEKTION === -->
-        <div id="mainMenu" class="screen">
-            <div class="header">
-                <button id="backToStart" class="neon-btn back-btn">
-                    <i class="fas fa-arrow-left"></i> TILBAGE
-                </button>
-                <h2 id="cityTitle" class="neon-subtitle"></h2>
-            </div>
+        <!-- Hovedmenu -->
+        <div id="mainMenu" class="screen" style="display: none;">
+            <h2 id="cityTitle"></h2>
             
             <div class="menu-grid">
-                <button class="menu-btn" data-feature="restaurants">
-                    <i class="fas fa-utensils"></i>
-                    <span>Restauranter</span>
-                </button>
-                <button class="menu-btn" data-feature="accommodation">
-                    <i class="fas fa-bed"></i>
-                    <span>Overnatning</span>
-                </button>
-                <button class="menu-btn" data-feature="sights">
-                    <i class="fas fa-camera"></i>
-                    <span>10 Seværdigheder</span>
-                </button>
-                <button class="menu-btn" data-feature="secrets">
-                    <i class="fas fa-key"></i>
-                    <span>5 Hemmeligheder</span>
-                </button>
-                <button class="menu-btn" data-feature="images">
-                    <i class="fas fa-images"></i>
-                    <span>Billeder</span>
-                </button>
-                <button class="menu-btn" data-feature="transport">
-                    <i class="fas fa-bus"></i>
-                    <span>Transport</span>
-                </button>
-                <button class="menu-btn" data-feature="weather">
-                    <i class="fas fa-cloud-sun"></i>
-                    <span>Vejr</span>
-                </button>
+                <button class="menu-btn" data-menu="restaurants" data-translate="restaurants">🍽️ Restauranter</button>
+                <button class="menu-btn" data-menu="accommodation" data-translate="accommodation">🏨 Overnatning</button>
+                <button class="menu-btn" data-menu="sights" data-translate="sights">📸 Seværdigheder</button>
+                <button class="menu-btn" data-menu="secrets" data-translate="secrets">🔓 Hemmelige Steder</button>
+                <button class="menu-btn" data-menu="images" data-translate="images">🖼️ Billeder</button>
+                <button class="menu-btn" data-menu="transport" data-translate="transport">🚗 Transport</button>
+                <button class="menu-btn" data-menu="weather" data-translate="weather">🌤️ Vejr</button>
             </div>
+            
+            <button class="back-btn" data-translate="back">Tilbage</button>
         </div>
 
-        <!-- === DETALJE SKÆRM SEKTION === -->
-        <div id="detailScreen" class="screen">
-            <div class="header">
-                <button id="backToMenu" class="neon-btn back-btn">
-                    <i class="fas fa-arrow-left"></i> TILBAGE
-                </button>
-                <h2 id="detailTitle" class="neon-subtitle"></h2>
-            </div>
-            <div id="detailContent" class="detail-content">
-                <!-- Indhold kommer her -->
-            </div>
+        <!-- Detalje skærm -->
+        <div id="detailScreen" class="screen" style="display: none;">
+            <h2 id="detailTitle"></h2>
+            <div id="detailContent" class="detail-content"></div>
+            <button class="back-btn" data-translate="back">Tilbage</button>
         </div>
 
-        <!-- === TRANSPORT PLANLÆGGER SEKTION === -->
-        <div id="transportPlanner" class="screen">
-            <div class="header">
-                <button id="backFromTransport" class="neon-btn back-btn">
-                    <i class="fas fa-arrow-left"></i> TILBAGE
-                </button>
-                <h2 class="neon-subtitle">Transport Planlægger</h2>
+        <!-- Transport planlægger -->
+        <div id="transportPlanner" class="screen" style="display: none;">
+            <h2 data-translate="transportPlanner">Transport Planlægger</h2>
+            
+            <div class="input-group">
+                <label for="fromLocation" data-translate="from">Fra</label>
+                <input type="text" id="fromLocation" name="fromLocation" required>
             </div>
-            <div class="planner-form">
-                <div class="input-group">
-                    <label for="fromLocation">Fra</label>
-                    <input type="text" id="fromLocation" placeholder="Nuværende location">
-                </div>
-                <div class="input-group">
-                    <label for="toLocation">Til</label>
-                    <input type="text" id="toLocation" placeholder="Destination">
-                </div>
-                <div class="date-row">
-                    <div class="input-group">
-                        <label for="departureDate">Dato</label>
-                        <input type="date" id="departureDate">
-                    </div>
-                    <div class="input-group">
-                        <label for="departureTime">Tidspunkt</label>
-                        <input type="time" id="departureTime">
-                    </div>
-                </div>
-                <button id="planRoute" class="neon-btn">
-                    <i class="fas fa-route"></i> PLANLÆG RUTE
-                </button>
-                <div id="routeResult" class="route-result"></div>
+            
+            <div class="input-group">
+                <label for="toLocation" data-translate="to">Til</label>
+                <input type="text" id="toLocation" name="toLocation" required>
             </div>
+            
+            <div class="input-group">
+                <label for="departureDate" data-translate="departureDate">Afrejse dato</label>
+                <input type="date" id="departureDate" name="departureDate" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="departureTime" data-translate="departureTime">Afrejse tid</label>
+                <input type="time" id="departureTime" name="departureTime" required>
+            </div>
+            
+            <button class="btn primary" data-translate="planRoute">Planlæg Rute</button>
+            <button class="back-btn" data-translate="back">Tilbage</button>
         </div>
     </div>
 
-    <!-- === SCRIPT INKLUDERING SEKTION === -->
     <script src="translations.js"></script>
-    <script src="api.js"></script>
     <script src="components.js"></script>
     <script src="script.js"></script>
 </body>
