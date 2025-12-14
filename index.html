@@ -36,7 +36,6 @@
     <!-- Favicon & App Icons -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='28' font-size='28'>✈️</text></svg>">
     <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='28' font-size='28'>✈️</text></svg>">
-    <link rel="manifest" href="manifest.json">
     
     <!-- Theme & Performance -->
     <meta name="theme-color" content="#2196F3">
@@ -156,19 +155,30 @@
     </div>
 
     <!-- =============================================================================
-         6. MAIN APPLICATION HEADER
+         6. MAIN APPLICATION HEADER (MED ALLE FIXES)
          ============================================================================= -->
     
-  <!-- Language Selector (Compact Version) -->
-<nav class="language-selector" role="navigation" aria-label="Søg valg">
-    <select id="selectLanguage" class="form-select language-select compact" aria-label="Vælg sprog">
-        <option value="da" selected title="Dansk">DK</option>
-        <option value="de" title="Deutsch">DE</option>
-        <option value="en" title="English">EN</option>
-        <option value="pl" title="Polski">PL</option>
-        <option value="lt" title="Lietuvių">LT</option>
-    </select>
-</nav>>
+    <header class="app-header" role="banner">
+        <div class="container">
+            <h1 class="app-title" data-translate="appTitle">REJSE ASSISTENT</h1>
+            
+            <!-- Language Selector & Theme Toggle (Compact Version) -->
+            <nav class="header-controls" role="navigation" aria-label="Søg valg">
+                <select id="selectLanguage" class="form-select language-select compact" aria-label="Vælg sprog">
+                    <option value="da" selected title="Dansk">DK</option>
+                    <option value="de" title="Deutsch">DE</option>
+                    <option value="en" title="English">EN</option>
+                    <option value="pl" title="Polski">PL</option>
+                    <option value="lt" title="Lietuvių">LT</option>
+                </select>
+                
+                <!-- Theme Toggle Button -->
+                <button id="themeToggle" class="theme-toggle" aria-label="Skift tema">
+                    <span class="theme-icon">🌙</span>
+                </button>
+            </nav>
+        </div>
+    </header>
 
     <!-- =============================================================================
          7. MAIN CONTENT AREA (ALL SCREENS)
@@ -208,7 +218,7 @@
                                    autocomplete="address-level2">
                         </div>
                         
-                        <!-- Date Inputs -->
+                        <!-- Date Inputs with Default Values -->
                         <div class="form-row">
                             <div class="form-group half-width">
                                 <label for="startDate" class="form-label" data-translate="startDate">
@@ -241,6 +251,7 @@
                                        data-translate-placeholder="daysPlaceholder"
                                        required
                                        aria-required="true"
+                                       value="7"
                                        autocomplete="off">
                             </div>
                         </div>
@@ -328,9 +339,13 @@
                                            id="departureDate"
                                            class="form-input"
                                            name="departureDate"
+                                           placeholder="Vælg afrejsedato"
                                            data-translate-placeholder="departureDatePlaceholder"
                                            required
-                                           aria-required="true">
+                                           aria-required="true"
+                                           min="2024-01-01"
+                                           max="2030-12-31"
+                                           autocomplete="off">
                                 </div>
                                 
                                 <div class="form-group half-width">
@@ -341,9 +356,12 @@
                                            id="departureTime"
                                            class="form-input"
                                            name="departureTime"
+                                           placeholder="Vælg afrejsetid"
                                            data-translate-placeholder="departureTimePlaceholder"
                                            required
-                                           aria-required="true">
+                                           aria-required="true"
+                                           value="10:00"
+                                           autocomplete="off">
                                 </div>
                             </div>
                         </div>
@@ -665,44 +683,58 @@
     </div>
 
     <!-- =============================================================================
-         9. BOTTOM NAVIGATION (MOBILE OPTIMIZED)
+         9. BOTTOM NAVIGATION (FIXED DATA-SCREEN)
          ============================================================================= -->
     
     <nav class="bottom-nav" role="navigation" aria-label="Hovednavigation">
         <div class="nav-container">
-            <button class="nav-item active" data-screen="startScreen" data-translate="home">
-                <svg class="nav-icon" role="img" aria-label="Hjem">
+            <button class="nav-item active" data-screen="startScreen" id="nav-start" aria-label="Hjem">
+                <svg class="nav-icon" role="img">
                     <use href="#icon-home"></use>
                 </svg>
-                <span class="nav-label">Hjem</span>
+                <span class="nav-label" data-translate="home">Hjem</span>
             </button>
             
-            <button class="nav-item" data-screen="transportScreen" data-translate="transport">
-                <svg class="nav-icon" role="img" aria-label="Transport">
+            <button class="nav-item" data-screen="transportScreen" id="nav-transport" aria-label="Transport">
+                <svg class="nav-icon" role="img">
                     <use href="#icon-transport"></use>
                 </svg>
-                <span class="nav-label">Transport</span>
+                <span class="nav-label" data-translate="transport">Transport</span>
             </button>
             
-            <button class="nav-item" data-screen="restaurantScreen" data-translate="restaurants">
-                <svg class="nav-icon" role="img" aria-label="Restauranter">
+            <button class="nav-item" data-screen="restaurantScreen" id="nav-restaurant" aria-label="Restauranter">
+                <svg class="nav-icon" role="img">
                     <use href="#icon-restaurant"></use>
                 </svg>
-                <span class="nav-label">Restaurant</span>
+                <span class="nav-label" data-translate="restaurants">Restaurant</span>
             </button>
             
-            <button class="nav-item" data-screen="accommodationScreen" data-translate="accommodation">
-                <svg class="nav-icon" role="img" aria-label="Overnatning">
+            <button class="nav-item" data-screen="accommodationScreen" id="nav-accommodation" aria-label="Overnatning">
+                <svg class="nav-icon" role="img">
                     <use href="#icon-hotel"></use>
                 </svg>
-                <span class="nav-label">Hotel</span>
+                <span class="nav-label" data-translate="accommodation">Hotel</span>
             </button>
             
-            <button class="nav-item" data-screen="sightsScreen" data-translate="sights">
-                <svg class="nav-icon" role="img" aria-label="Seværdigheder">
+            <button class="nav-item" data-screen="sightsScreen" id="nav-sights" aria-label="Seværdigheder">
+                <svg class="nav-icon" role="img">
                     <use href="#icon-sight"></use>
                 </svg>
-                <span class="nav-label">Seværdigheder</span>
+                <span class="nav-label" data-translate="sights">Seværdigheder</span>
+            </button>
+            
+            <button class="nav-item" data-screen="secretsScreen" id="nav-secrets" aria-label="Hemmelige steder">
+                <svg class="nav-icon" role="img">
+                    <use href="#icon-secret"></use>
+                </svg>
+                <span class="nav-label" data-translate="secrets">Hemmelige</span>
+            </button>
+            
+            <button class="nav-item" data-screen="imagesScreen" id="nav-images" aria-label="Billeder">
+                <svg class="nav-icon" role="img">
+                    <use href="#icon-image"></use>
+                </svg>
+                <span class="nav-label" data-translate="images">Billeder</span>
             </button>
         </div>
     </nav>
@@ -721,7 +753,7 @@
     <script src="script.js"></script>
     
     <!-- =============================================================================
-         11. PERFORMANCE & ANALYTICS (DEVELOPMENT MODE)
+         11. PERFORMANCE & ANALYTICS (DEVELOPMENT MODE - SERVICE WORKER DISABLED)
          ============================================================================= -->
     
     <!-- Development Analytics (Remove in production) -->
@@ -748,7 +780,8 @@
             });
         }
         
-        // Service Worker Registration (Progressive Web App)
+        // Service Worker Disabled - Uncomment when files exist
+        /*
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/sw.js')
@@ -760,6 +793,7 @@
                     });
             });
         }
+        */
     </script>
 
     <!-- =============================================================================
