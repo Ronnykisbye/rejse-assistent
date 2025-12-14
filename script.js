@@ -1,6 +1,9 @@
 // === REJSE ASSISTENT APP ===
+// Denne fil indeholder hele app-logikken og funktionaliteten
+
 class TravelApp {
     constructor() {
+        // === APP INITIALISERING SEKTION ===
         this.currentLanguage = 'da';
         this.currentTrip = null;
         this.currentCity = '';
@@ -14,6 +17,7 @@ class TravelApp {
         this.updateUI();
     }
 
+    // === EVENT LISTENERS SEKTION ===
     setupEventListeners() {
         // Sprogskifte
         const languageSelect = document.getElementById('selectLanguage');
@@ -50,6 +54,7 @@ class TravelApp {
         });
     }
 
+    // === MENU HÅNDTERING SEKTION ===
     handleMenuClick(feature) {
         if (!this.currentCity) {
             alert(this.translations[this.currentLanguage].selectDestinationFirst);
@@ -105,6 +110,7 @@ class TravelApp {
         }
     }
 
+    // === START REJSE SEKTION ===
     startTrip() {
         const formData = this.getFormData('startScreen');
         const errors = this.validateForm(formData, ['destination', 'startDate', 'days']);
@@ -138,6 +144,7 @@ class TravelApp {
             });
     }
 
+    // === FORM HÅNDTERING SEKTION ===
     geocodeCity(cityName) {
         return new Promise((resolve, reject) => {
             // Simuler API kald - udskift med rigtig API kald
@@ -176,6 +183,7 @@ class TravelApp {
         return errors;
     }
 
+    // === UI OPDATERING SEKTION ===
     updateUI() {
         // Opdater alle tekster
         document.querySelectorAll('[data-translate]').forEach(element => {
@@ -215,6 +223,7 @@ class TravelApp {
         }
     }
 
+    // === SKÆRM HÅNDTERING SEKTION ===
     showScreen(screenId) {
         document.querySelectorAll('.screen').forEach(screen => {
             screen.style.display = 'none';
@@ -229,6 +238,7 @@ class TravelApp {
         this.showScreen('mainMenu');
     }
 
+    // === DATA LAGRING SEKTION ===
     saveTrip() {
         localStorage.setItem('currentTrip', JSON.stringify(this.currentTrip));
     }
@@ -253,7 +263,7 @@ class TravelApp {
         }
     }
 
-    // === LOADING FUNKTIONER ===
+    // === DATA HENTING FUNKTIONER SEKTION ===
     async loadRestaurants() {
         const detailContent = document.getElementById('detailContent');
         if (!detailContent) return;
@@ -400,13 +410,13 @@ class TravelApp {
     }
 }
 
-// === APP INITIALISERING ===
+// === APP INITIALISERING SEKTION ===
 document.addEventListener('DOMContentLoaded', () => {
     const app = new TravelApp();
     window.travelApp = app; // Gør appen globalt tilgængelig
 });
 
-// === HELPER FUNKTIONER ===
+// === HELPER FUNKTIONER SEKTION ===
 function activateMenuButton(feature) {
     document.querySelectorAll('.menu-btn').forEach(btn => {
         btn.classList.remove('active');
