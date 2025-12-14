@@ -1,4 +1,4 @@
-// Rejse Assistent - Hoved logik
+// === REJSE ASSISTENT KLASSE ===
 class TravelApp {
     constructor() {
         this.currentCity = null;
@@ -7,30 +7,22 @@ class TravelApp {
         this.init();
     }
     
+    // === INITIALISERING SEKTION ===
     init() {
-        // Initialiser sprog
         Translations.initLanguage();
-        
-        // Load indstillinger
         this.loadSettings();
-        
-        // Bind event listeners
         this.bindEvents();
-        
-        // Check om der er gemt data
         this.checkSavedData();
-        
         console.log('Rejse Assistent initialiseret');
     }
     
+    // === EVENT HANDLER BINDING SEKTION ===
     bindEvents() {
-        // Theme toggle
         const themeBtn = document.getElementById('themeBtn');
         if (themeBtn) {
             themeBtn.addEventListener('click', () => this.toggleTheme());
         }
         
-        // Language selector
         const langSelect = document.getElementById('languageSelect');
         if (langSelect) {
             langSelect.addEventListener('change', (e) => {
@@ -38,19 +30,13 @@ class TravelApp {
             });
         }
         
-        // Start knap
         const startBtn = document.getElementById('startBtn');
         if (startBtn) {
             startBtn.addEventListener('click', () => this.handleStartTravel());
         }
         
-        // Back knapper
         this.bindBackButtons();
-        
-        // Menu knapper
         this.bindMenuButtons();
-        
-        // Transport planlægger
         this.bindTransportPlanner();
     }
     
@@ -93,6 +79,7 @@ class TravelApp {
         }
     }
     
+    // === REJSE START HÅNDTERING SEKTION ===
     async handleStartTravel() {
         const formData = getFormData('startScreen');
         const errors = validateForm(formData, ['destination', 'startDate', 'days']);
@@ -102,14 +89,12 @@ class TravelApp {
             return;
         }
         
-        // Geokod by
         const cityData = await TravelAPI.geocodeCity(formData.destination);
         if (!cityData) {
             alert('Kunne ikke finde byen. Prøv venligst igen.');
             return;
         }
         
-        // Gem trip data
         this.currentTrip = {
             ...formData,
             ...cityData
@@ -117,13 +102,8 @@ class TravelApp {
         
         this.currentCity = cityData.display_name.split(',')[0];
         
-        // Opdater UI
         this.updateCityTitle();
-        
-        // Vis hovedmenu
         showScreen('mainMenu');
-        
-        // Gem trip
         AppStorage.saveTrip(this.currentTrip);
         
         console.log('Trip started:', this.currentTrip);
@@ -136,6 +116,7 @@ class TravelApp {
         }
     }
     
+    // === MENU HÅNDTERING SEKTION ===
     async handleMenuClick(feature) {
         if (!this.currentCity) {
             alert('Vælg venligst en destination først');
@@ -149,13 +130,14 @@ class TravelApp {
         
         if (!detailContent) return;
         
-        // Opdater titel baseret på feature
         const titles = {
             restaurants: '🍽️ Restauranter',
             accommodation: '🏨 Overnatning',
             sights: '📸 Seværdigheder',
             secrets: '🔓 Hemmelige Steder',
-            images: '🖼️ Billeder'
+            images: '🖼️ Billeder',
+            transport: '🚗 Transport',
+            weather: '🌤️ Vejr'
         };
         
         if (feature !== 'transport' && detailTitle) {
@@ -181,9 +163,13 @@ class TravelApp {
             case 'transport':
                 showScreen('transportPlanner');
                 break;
+            case 'weather':
+                await this.loadWeather();
+                break;
         }
     }
     
+    // === DATA INDHENTNING FUNKTIONER SEKTION ===
     async loadRestaurants() {
         const detailContent = document.getElementById('detailContent');
         showScreen('detailScreen');
@@ -251,9 +237,7 @@ class TravelApp {
         TravelComponents.showLoading(detailContent);
         
         try {
-            // Hent by info først
             const cityInfo = await TravelAPI.getWikipediaInfo(this.currentCity);
-            
             const sights = await TravelAPI.findSights(
                 this.currentTrip.lat, 
                 this.currentTrip.lon
@@ -266,13 +250,11 @@ class TravelApp {
             
             let html = '';
             
-            // Tilføj by info hvis tilgængelig
             if (cityInfo) {
                 const weather = await TravelAPI.getWeather(this.currentTrip.lat, this.currentTrip.lon);
                 html += TravelComponents.createCityInfo(cityInfo, weather);
             }
             
-            // Tilføj seværdigheder
             if (sights.length > 0) {
                 html += '<h3><i class="fas fa-camera"></i> Top 10 Seværdigheder</h3>';
                 html += sights
@@ -343,6 +325,31 @@ class TravelApp {
         }
     }
     
+    async loadWeather() {
+        const detailContent = document.getElementById('detailContent');
+        showScreen('detailScreen');
+        
+        TravelComponents.showLoading(detailContent);
+        
+        try {
+            const weather = await TravelAPI.getWeather(
+                this.currentTrip.lat, 
+                this.currentTrip.lon
+            );
+            
+            if (weather) {
+                detailContent.innerHTML = TravelComponents.createWeatherCard(weather);
+            } else {
+                TravelComponents.showNoResults(detailContent);
+            }
+            
+        } catch (error) {
+            console.error('Error loading weather:', error);
+            TravelComponents.showError(detailContent);
+        }
+    }
+    
+    // === TRANSPORT HÅNDTERING SEKTION ===
     async handlePlanRoute() {
         const formData = getFormData('transportPlanner');
         const errors = validateForm(formData, ['fromLocation', 'toLocation']);
@@ -378,6 +385,7 @@ class TravelApp {
         }
     }
     
+    // === THEME HÅNDTERING SEKTION ===
     toggleTheme() {
         this.theme = this.theme === 'dark' ? 'light' : 'dark';
         document.body.className = this.theme + '-mode';
@@ -391,19 +399,18 @@ class TravelApp {
             icon.className = 'fas fa-moon';
         }
         
-        // Gem indstillinger
         AppStorage.saveSettings({
             theme: this.theme,
             language: Translations.currentLanguage()
         });
     }
     
+    // === SETTINGS HÅNDTERING SEKTION ===
     loadSettings() {
         const settings = AppStorage.getSettings();
         this.theme = settings.theme;
         document.body.className = this.theme + '-mode';
         
-        // Opdater theme ikon
         const themeBtn = document.getElementById('themeBtn');
         if (themeBtn) {
             const icon = themeBtn.querySelector('i');
@@ -411,8 +418,8 @@ class TravelApp {
         }
     }
     
+    // === DATA CHECK SEKTION ===
     checkSavedData() {
-        // Check om der er en gemt trip
         const trips = AppStorage.getTrips();
         if (trips.length > 0) {
             console.log('Fundet gemte trips:', trips.length);
@@ -420,17 +427,16 @@ class TravelApp {
     }
 }
 
-// Initialiser app når DOM er klar
+// === APP INITIALISERING SEKTION ===
 document.addEventListener('DOMContentLoaded', () => {
     window.travelApp = new TravelApp();
 });
 
-// Error handling
+// === ERROR HANDLING SEKTION ===
 window.addEventListener('error', (e) => {
     console.error('App error:', e.error);
 });
 
-// Service Worker til PWA (optional)
+// === SERVICE WORKER SEKTION (valgfri) ===
 if ('serviceWorker' in navigator) {
-    // Kan tilføjes senere for offline funktionalitet
 }
