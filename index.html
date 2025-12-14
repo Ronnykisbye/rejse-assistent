@@ -1,18 +1,17 @@
 <!DOCTYPE html>
 <html lang="da">
 <head>
-    <!-- === HEAD SEKTION === -->
-    <!-- Indeholder metadata, titler og stylesheets -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-translate="appTitle">REJSE ASSISTENT</title>
+    <title>REJSE ASSISTENT</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Fjern denne linje hvis du ikke har favicon -->
+    <!-- <link rel="icon" href="favicon.ico" type="image/x-icon"> -->
 </head>
 <body>
     <div class="app-container">
-        <!-- === START SKÆRM SEKTION === -->
-        <!-- Den første skærm hvor brugeren starter rejsen -->
+        <!-- START SKÆRM -->
         <div id="startScreen" class="screen">
             <h1 data-translate="appTitle">REJSE ASSISTENT</h1>
             
@@ -36,14 +35,16 @@
                 <select id="selectLanguage" name="selectLanguage">
                     <option value="da">Dansk</option>
                     <option value="en">English</option>
+                    <option value="de">Deutsch</option>
+                    <option value="pl">Polski</option>
+                    <option value="lt">Lietuvių</option>
                 </select>
             </div>
             
             <button id="startTravel" data-translate="startTravel" class="btn primary">START REJSE</button>
         </div>
 
-        <!-- === HOVEDMENU SEKTION === -->
-        <!-- Vises efter brugeren starter rejsen -->
+        <!-- HOVEDMENU -->
         <div id="mainMenu" class="screen" style="display: none;">
             <h2 id="cityTitle"></h2>
             
@@ -60,16 +61,14 @@
             <button class="back-btn" data-translate="back">Tilbage</button>
         </div>
 
-        <!-- === DETALJE SKÆRM SEKTION === -->
-        <!-- Viser detaljer for valgte funktioner -->
+        <!-- DETALJE SKÆRM -->
         <div id="detailScreen" class="screen" style="display: none;">
             <h2 id="detailTitle"></h2>
             <div id="detailContent" class="detail-content"></div>
             <button class="back-btn" data-translate="back">Tilbage</button>
         </div>
 
-        <!-- === TRANSPORT PLANLÆGGER SEKTION === -->
-        <!-- Transport ruteplanlægning -->
+        <!-- TRANSPORT PLANLÆGGER -->
         <div id="transportPlanner" class="screen" style="display: none;">
             <h2 data-translate="transportPlanner">Transport Planlægger</h2>
             
@@ -98,10 +97,43 @@
         </div>
     </div>
 
-    <!-- === SCRIPT INKLUDERING SEKTION === -->
-    <!-- VIGTIGT: Inkluder filerne i denne rækkefølge -->
+    <!-- SCRIPT INKLUDERING -->
     <script src="translations.js"></script>
     <script src="components.js"></script>
     <script src="script.js"></script>
+    
+    <!-- FEJL FINDING SCRIPT -->
+    <script>
+        // Tjek om appen initialiseres korrekt
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded - checking app initialization');
+            
+            // Tjek om translations er defineret
+            if (typeof translations === 'undefined') {
+                console.error('ERROR: translations is not defined');
+                alert('Translations file not loaded correctly');
+            } else {
+                console.log('Translations loaded successfully');
+                console.log('Available languages:', Object.keys(translations));
+            }
+            
+            // Tjek om TravelApp klassen eksisterer
+            if (typeof TravelApp === 'undefined') {
+                console.error('ERROR: TravelApp class not defined');
+                alert('Script.js not loaded correctly');
+            } else {
+                console.log('TravelApp class available');
+                
+                // Prøv at initialisere appen manuelt for fejlfinding
+                try {
+                    const app = new TravelApp();
+                    console.log('App initialized successfully');
+                } catch (error) {
+                    console.error('ERROR initializing app:', error);
+                    alert('Error initializing app: ' + error.message);
+                }
+            }
+        });
+    </script>
 </body>
 </html>
