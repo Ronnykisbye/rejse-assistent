@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="da">
 <head>
+    <!-- === HEAD SEKTION === -->
+    <!-- Indeholder metadata, titler og stylesheets -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-translate="appTitle">REJSE ASSISTENT</title>
@@ -9,7 +11,8 @@
 </head>
 <body>
     <div class="app-container">
-        <!-- Start skærm -->
+        <!-- === START SKÆRM SEKTION === -->
+        <!-- Den første skærm hvor brugeren starter rejsen -->
         <div id="startScreen" class="screen">
             <h1 data-translate="appTitle">REJSE ASSISTENT</h1>
             
@@ -39,7 +42,8 @@
             <button id="startTravel" data-translate="startTravel" class="btn primary">START REJSE</button>
         </div>
 
-        <!-- Hovedmenu -->
+        <!-- === HOVEDMENU SEKTION === -->
+        <!-- Vises efter brugeren starter rejsen -->
         <div id="mainMenu" class="screen" style="display: none;">
             <h2 id="cityTitle"></h2>
             
@@ -56,14 +60,16 @@
             <button class="back-btn" data-translate="back">Tilbage</button>
         </div>
 
-        <!-- Detalje skærm -->
+        <!-- === DETALJE SKÆRM SEKTION === -->
+        <!-- Viser detaljer for valgte funktioner -->
         <div id="detailScreen" class="screen" style="display: none;">
             <h2 id="detailTitle"></h2>
             <div id="detailContent" class="detail-content"></div>
             <button class="back-btn" data-translate="back">Tilbage</button>
         </div>
 
-        <!-- Transport planlægger -->
+        <!-- === TRANSPORT PLANLÆGGER SEKTION === -->
+        <!-- Transport ruteplanlægning -->
         <div id="transportPlanner" class="screen" style="display: none;">
             <h2 data-translate="transportPlanner">Transport Planlægger</h2>
             
@@ -92,6 +98,7 @@
         </div>
     </div>
 
+    <!-- === SCRIPT INKLUDERING SEKTION === -->
     <!-- VIGTIGT: Inkluder filerne i denne rækkefølge -->
     <script src="translations.js"></script>
     <script src="components.js"></script>
