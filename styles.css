@@ -1172,3 +1172,17 @@ body {
 img {
     loading: lazy;
 }
+/* =============================================================================
+   25. COMPACT LANGUAGE SELECTOR FIX
+   ============================================================================= */
+
+.language-select.compact {
+    max-width: 80px;
+    font-size: 12px;
+    padding: 4px 8px !important;
+    min-height: 36px !important;
+}
+
+.language-select.compact option {
+    font-size: 12px;
+}
