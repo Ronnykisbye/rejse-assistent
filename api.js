@@ -9,7 +9,7 @@ const API_CONFIG = {
 
 // Gratis API nøgler (du skal registrere dig hos OpenWeatherMap)
 const API_KEYS = {
-    openweather: 'din_openweather_key_her' // Gratis tier
+    openweather: 4fc6c7d240e78becfd0de558b6202af4 // Gratis tier
 };
 
 // Geokodning - by til koordinater
