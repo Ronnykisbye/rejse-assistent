@@ -6,8 +6,6 @@
     <title>REJSE ASSISTENT</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <!-- Fjern denne linje hvis du ikke har favicon -->
-    <!-- <link rel="icon" href="favicon.ico" type="image/x-icon"> -->
 </head>
 <body>
     <div class="app-container">
@@ -97,43 +95,8 @@
         </div>
     </div>
 
-    <!-- SCRIPT INKLUDERING -->
     <script src="translations.js"></script>
     <script src="components.js"></script>
     <script src="script.js"></script>
-    
-    <!-- FEJL FINDING SCRIPT -->
-    <script>
-        // Tjek om appen initialiseres korrekt
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM loaded - checking app initialization');
-            
-            // Tjek om translations er defineret
-            if (typeof translations === 'undefined') {
-                console.error('ERROR: translations is not defined');
-                alert('Translations file not loaded correctly');
-            } else {
-                console.log('Translations loaded successfully');
-                console.log('Available languages:', Object.keys(translations));
-            }
-            
-            // Tjek om TravelApp klassen eksisterer
-            if (typeof TravelApp === 'undefined') {
-                console.error('ERROR: TravelApp class not defined');
-                alert('Script.js not loaded correctly');
-            } else {
-                console.log('TravelApp class available');
-                
-                // Prøv at initialisere appen manuelt for fejlfinding
-                try {
-                    const app = new TravelApp();
-                    console.log('App initialized successfully');
-                } catch (error) {
-                    console.error('ERROR initializing app:', error);
-                    alert('Error initializing app: ' + error.message);
-                }
-            }
-        });
-    </script>
 </body>
 </html>
