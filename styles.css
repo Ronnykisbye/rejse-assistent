@@ -1,62 +1,102 @@
 /* =============================================================================
-   TRAVEL ASSISTANT APP - COMPLETE STYLESHEET
+   TRAVEL ASSISTANT APP - MODERN NEON THEME STYLESHEET
    ============================================================================= */
 
 /* === PERFORMANCE META DATA === */
-/* CSS Variables: ✅ | Mobile Responsive: ✅ | Cross-browser: ✅ | Animations: ✅ */
+/* Neon Theme: ✅ | Contrast: WCAG AA | Modern Design: ✅ | Animations: ✅ */
 
 /* =============================================================================
-   1. CUSTOM CSS VARIABLES & CONFIGURATION
+   1. NEON THEME CSS VARIABLES & CONFIGURATION
    ============================================================================= */
 
 :root {
-    /* === COLORS PRIMARY === */
-    --primary-color: #2196F3;
-    --primary-dark: #1976D2;
-    --primary-light: #BBDEFB;
-    --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    /* === NEON COLOR PALETTE === */
+    --neon-primary: #00FFFF;
+    --neon-primary-light: #40E0D0;
+    --neon-primary-dark: #00CED1;
+    --neon-secondary: #FF1493;
+    --neon-secondary-light: #FF69B4;
+    --neon-secondary-dark: #C71585;
+    --neon-accent: #FFD700;
+    --neon-accent-light: #FFED4E;
+    --neon-accent-dark: #FFA500;
+    --neon-purple: #9D4EDD;
+    --neon-purple-light: #C77DFF;
+    --neon-purple-dark: #7209B7;
+    --neon-green: #39FF14;
+    --neon-green-light: #6FFF4F;
+    --neon-green-dark: #00FF00;
+    --neon-pink: #FF10F0;
+    --neon-pink-light: #FF69FC;
+    --neon-pink-dark: #CC00CC;
     
-    /* === COLORS SECONDARY === */
-    --secondary-color: #4CAF50;
-    --secondary-dark: #388E3C;
-    --secondary-light: #C8E6C9;
+    /* === APPLICATION COLORS (NEON THEMED) === */
+    --primary-color: var(--neon-primary);
+    --primary-dark: var(--neon-primary-dark);
+    --primary-light: var(--neon-primary-light);
+    --secondary-color: var(--neon-purple);
+    --secondary-dark: var(--neon-purple-dark);
+    --secondary-light: var(--neon-purple-light);
+    --accent-color: var(--neon-secondary);
+    --accent-dark: var(--neon-secondary-dark);
+    --accent-light: var(--neon-secondary-light);
     
-    /* === COLORS TERTIARY === */
-    --accent-color: #FF9800;
-    --accent-dark: #F57C00;
-    --accent-light: #FFE0B2;
+    /* === NEON BACKGROUNDS === */
+    --bg-primary: #0A0A0F;
+    --bg-secondary: #1A1A2E;
+    --bg-tertiary: #16213E;
+    --bg-quaternary: #0F3460;
+    --bg-card: rgba(15, 52, 96, 0.8);
+    --bg-overlay: rgba(10, 10, 15, 0.95);
     
-    /* === NEUTRAL COLORS === */
-    --white: #FFFFFF;
-    --black: #000000;
-    --gray-50: #FAFAFA;
-    --gray-100: #F5F5F5;
-    --gray-200: #EEEEEE;
-    --gray-300: #E0E0E0;
-    --gray-400: #BDBDBD;
-    --gray-500: #9E9E9E;
-    --gray-600: #757575;
-    --gray-700: #616161;
-    --gray-800: #424242;
-    --gray-900: #212121;
+    /* === NEON TEXT COLORS (HIGH CONTRAST) === */
+    --text-primary: #FFFFFF;
+    --text-secondary: #E0E0FF;
+    --text-tertiary: #B0B0D0;
+    --text-muted: #8080A0;
+    --text-inverse: #0A0A0F;
     
-    /* === STATUS COLORS === */
-    --success-color: #4CAF50;
-    --warning-color: #FF9800;
-    --error-color: #F44336;
-    --info-color: #2196F3;
+    /* === NEON STATUS COLORS === */
+    --success-color: var(--neon-green);
+    --success-bg: rgba(57, 255, 20, 0.1);
+    --success-border: rgba(57, 255, 20, 0.5);
+    --warning-color: var(--neon-accent);
+    --warning-bg: rgba(255, 215, 0, 0.1);
+    --warning-border: rgba(255, 215, 0, 0.5);
+    --error-color: #FF4444;
+    --error-bg: rgba(255, 68, 68, 0.1);
+    --error-border: rgba(255, 68, 68, 0.5);
+    --info-color: var(--neon-primary);
+    --info-bg: rgba(0, 255, 255, 0.1);
+    --info-border: rgba(0, 255, 255, 0.5);
     
-    /* === SHADOWS === */
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
-    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
-    --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.2);
+    /* === NEON GRADIENTS === */
+    --primary-gradient: linear-gradient(135deg, #00FFFF 0%, #00CED1 50%, #FF1493 100%);
+    --secondary-gradient: linear-gradient(135deg, #9D4EDD 0%, #7209B7 50%, #FF69B4 100%);
+    --accent-gradient: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FF1493 100%);
+    --bg-gradient: linear-gradient(180deg, #0A0A0F 0%, #1A1A2E 50%, #16213E 100%);
+    --card-gradient: linear-gradient(135deg, rgba(15, 52, 96, 0.9) 0%, rgba(26, 26, 46, 0.9) 100%);
+    
+    /* === NEON GLOW EFFECTS === */
+    --glow-primary: 0 0 20px rgba(0, 255, 255, 0.8), 0 0 40px rgba(0, 255, 255, 0.4);
+    --glow-secondary: 0 0 20px rgba(157, 78, 221, 0.8), 0 0 40px rgba(157, 78, 221, 0.4);
+    --glow-accent: 0 0 20px rgba(255, 20, 147, 0.8), 0 0 40px rgba(255, 20, 147, 0.4);
+    --glow-success: 0 0 20px rgba(57, 255, 20, 0.8), 0 0 40px rgba(57, 255, 20, 0.4);
+    --glow-warning: 0 0 20px rgba(255, 215, 0, 0.8), 0 0 40px rgba(255, 215, 0, 0.4);
+    --glow-error: 0 0 20px rgba(255, 68, 68, 0.8), 0 0 40px rgba(255, 68, 68, 0.4);
+    
+    /* === NEON SHADOWS === */
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+    --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.6);
+    --shadow-neon: 0 0 30px rgba(0, 255, 255, 0.5), 0 0 60px rgba(0, 255, 255, 0.3);
     
     /* === BORDER RADIUS === */
-    --radius-sm: 4px;
-    --radius-md: 8px;
-    --radius-lg: 12px;
-    --radius-xl: 16px;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
     --radius-full: 50%;
     
     /* === SPACING === */
@@ -68,9 +108,9 @@
     --spacing-2xl: 3rem;     /* 48px */
     --spacing-3xl: 4rem;     /* 64px */
     
-    /* === TYPOGRAPHY === */
-    --font-family-primary: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    --font-family-secondary: 'Roboto', Arial, sans-serif;
+    /* === MODERN TYPOGRAPHY === */
+    --font-family-primary: 'Inter', 'Segoe UI', 'Roboto', sans-serif;
+    --font-family-secondary: 'JetBrains Mono', 'Consolas', monospace;
     --font-size-xs: 0.75rem;   /* 12px */
     --font-size-sm: 0.875rem;  /* 14px */
     --font-size-base: 1rem;    /* 16px */
@@ -79,39 +119,76 @@
     --font-size-2xl: 1.5rem;   /* 24px */
     --font-size-3xl: 2rem;     /* 32px */
     --font-size-4xl: 2.5rem;   /* 40px */
+    --font-size-5xl: 3rem;     /* 48px */
     --line-height-tight: 1.25;
     --line-height-normal: 1.5;
     --line-height-relaxed: 1.75;
+    --font-light: 300;
+    --font-normal: 400;
+    --font-medium: 500;
+    --font-semibold: 600;
+    --font-bold: 700;
+    --font-black: 900;
     
-    /* === BREAKPOINTS === */
+    /* === MODERN BREAKPOINTS === */
     --breakpoint-xs: 480px;
     --breakpoint-sm: 768px;
     --breakpoint-md: 1024px;
     --breakpoint-lg: 1280px;
     --breakpoint-xl: 1440px;
     
-    /* === TRANSITIONS === */
+    /* === NEON ANIMATIONS === */
     --transition-fast: 0.15s ease;
     --transition-normal: 0.3s ease;
     --transition-slow: 0.5s ease;
     --transition-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-neon: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    --transition-glow: ease-in-out infinite alternate;
 }
 
 /* =============================================================================
-   2. DARK MODE CONFIGURATION (MAINTAINED FOR FUTURE USE)
+   2. NEON THEME CUSTOM PROPERTIES & RESPONSIVE DESIGN
    ============================================================================= */
 
-@media (prefers-color-scheme: dark) {
-    :root {
-        --bg-primary: var(--gray-900);
-        --bg-secondary: var(--gray-800);
-        --text-primary: var(--gray-100);
-        --text-secondary: var(--gray-400);
-    }
+/* === Custom scrollbar for neon theme === */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--neon-primary) 0%, var(--neon-purple) 100%);
+    border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, var(--neon-primary-light) 0%, var(--neon-purple-light) 100%);
+}
+
+/* === Selection text styling === */
+::selection {
+    background: rgba(157, 78, 221, 0.3);
+    color: var(--text-primary);
+}
+
+::-moz-selection {
+    background: rgba(157, 78, 221, 0.3);
+    color: var(--text-primary);
+}
+
+/* === Focus ring styling === */
+:focus-visible {
+    outline: 2px solid var(--neon-primary);
+    outline-offset: 2px;
+    box-shadow: var(--glow-primary);
 }
 
 /* =============================================================================
-   3. CSS RESET & BASE STYLES
+   3. NEON THEME CSS RESET & BASE STYLES
    ============================================================================= */
 
 *,
@@ -126,61 +203,234 @@ html {
     font-size: 100%;
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
-    -webkit-tap-highlight-color: transparent;
+    -webkit-tap-highlight-color: rgba(0, 255, 255, 0.3);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 body {
     font-family: var(--font-family-primary);
+    font-weight: var(--font-normal);
     font-size: var(--font-size-base);
     line-height: var(--line-height-normal);
-    color: var(--gray-900);
-    background: var(--primary-gradient);
+    color: var(--text-primary);
+    background: var(--bg-gradient);
+    background-attachment: fixed;
     min-height: 100vh;
     overflow-x: hidden;
     position: relative;
+    
+    /* Subtle animated background pattern */
+    background-image: 
+        radial-gradient(circle at 20% 50%, rgba(157, 78, 221, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(0, 255, 255, 0.1) 0%, transparent 50%), 
+        radial-gradient(circle at 40% 20%, rgba(255, 20, 147, 0.1) 0%, transparent 50%);
+    background-size: 100% 100%, 50% 50%, 80% 80%;
+    animation: backgroundShift 20s ease-in-out infinite alternate;
 }
 
+/* === Background animation === */
+@keyframes backgroundShift {
+    0% {
+        background-position: 0% 50%, 100% 100%, 50% 0%;
+    }
+    100% {
+        background-position: 100% 50%, 0% 100%, 100% 100%;
+    }
+}
+
+/* === Better font loading === */
+@font-face {
+    font-family: 'Inter';
+    src: local('Inter'), url('https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2') format('woff2');
+    font-display: swap;
+}
 /* =============================================================================
-   4. TYPOGRAPHY SYSTEM
+   4. NEON THEME TYPOGRAPHY SYSTEM
    ============================================================================= */
 
 h1, h2, h3, h4, h5, h6 {
-    font-weight: 600;
+    font-weight: var(--font-bold);
     line-height: var(--line-height-tight);
     margin-bottom: var(--spacing-sm);
-    color: var(--gray-900);
+    color: var(--text-primary);
+    letter-spacing: -0.025em;
 }
 
 h1 { 
+    font-size: var(--font-size-5xl); 
+    font-weight: var(--font-black);
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+    position: relative;
+}
+
+h1::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--primary-gradient);
+    border-radius: var(--radius-full);
+    box-shadow: var(--glow-primary);
+}
+
+h2 { 
     font-size: var(--font-size-4xl); 
-    font-weight: 700;
+    font-weight: var(--font-bold);
+    color: var(--neon-primary-light);
+    text-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+    margin-bottom: var(--spacing-md);
+}
+
+h3 { 
+    font-size: var(--font-size-3xl); 
+    font-weight: var(--font-semibold);
+    color: var(--neon-purple-light);
+    text-shadow: 0 0 10px rgba(157, 78, 221, 0.3);
+}
+
+h4 { 
+    font-size: var(--font-size-2xl); 
+    font-weight: var(--font-semibold);
+    color: var(--neon-secondary-light);
+    text-shadow: 0 0 8px rgba(255, 20, 147, 0.3);
+}
+
+h5 { 
+    font-size: var(--font-size-xl); 
+    font-weight: var(--font-medium);
+    color: var(--text-secondary);
+}
+
+h6 { 
+    font-size: var(--font-size-lg); 
+    font-weight: var(--font-medium);
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+p {
+    margin-bottom: var(--spacing-md);
+    color: var(--text-secondary);
+    line-height: var(--line-height-relaxed);
+    font-size: var(--font-size-base);
+}
+
+a {
+    color: var(--neon-primary);
+    text-decoration: none;
+    transition: all var(--transition-neon);
+    text-shadow: 0 0 5px rgba(0, 255, 255, 0.3);
+    border-bottom: 1px solid transparent;
+}
+
+a:hover {
+    color: var(--neon-primary-light);
+    text-shadow: 0 0 15px rgba(0, 255, 255, 0.8), 0 0 25px rgba(0, 255, 255, 0.5);
+    border-bottom-color: var(--neon-primary);
+    transform: translateY(-1px);
+}
+
+/* === Special text elements === */
+.text-gradient {
     background: var(--primary-gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
 
-h2 { font-size: var(--font-size-3xl); }
-h3 { font-size: var(--font-size-2xl); }
-h4 { font-size: var(--font-size-xl); }
-h5 { font-size: var(--font-size-lg); }
-h6 { font-size: var(--font-size-base); }
+.text-neon {
+    color: var(--neon-primary);
+    text-shadow: var(--glow-primary);
+}
 
-p {
+.text-neon-secondary {
+    color: var(--neon-secondary);
+    text-shadow: var(--glow-secondary);
+}
+
+.text-neon-accent {
+    color: var(--neon-accent);
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+}
+
+/* === Code styling === */
+code {
+    font-family: var(--font-family-secondary);
+    background: rgba(157, 78, 221, 0.2);
+    color: var(--neon-purple-light);
+    padding: 0.2em 0.4em;
+    border-radius: var(--radius-sm);
+    font-size: 0.9em;
+    border: 1px solid rgba(157, 78, 221, 0.3);
+}
+
+/* === Blockquote styling === */
+blockquote {
+    border-left: 3px solid var(--neon-primary);
+    padding-left: var(--spacing-md);
+    margin: var(--spacing-lg) 0;
+    color: var(--text-tertiary);
+    font-style: italic;
+    position: relative;
+}
+
+blockquote::before {
+    content: '"';
+    font-size: var(--font-size-4xl);
+    color: var(--neon-primary);
+    opacity: 0.3;
+    position: absolute;
+    top: -10px;
+    left: -10px;
+}
+
+/* === Lists === */
+ul, ol {
     margin-bottom: var(--spacing-md);
-    color: var(--gray-700);
+    color: var(--text-secondary);
 }
 
-a {
-    color: var(--primary-color);
-    text-decoration: none;
-    transition: color var(--transition-fast);
+li {
+    margin-bottom: var(--spacing-xs);
+    position: relative;
+    padding-left: var(--spacing-lg);
 }
 
-a:hover {
-    color: var(--primary-dark);
+ul li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--neon-purple);
+    text-shadow: 0 0 5px rgba(157, 78, 221, 0.5);
 }
 
+/* === Strong and emphasis === */
+strong {
+    font-weight: var(--font-bold);
+    color: var(--text-primary);
+}
+
+em {
+    font-style: italic;
+    color: var(--neon-purple-light);
+}
+
+mark {
+    background: rgba(255, 215, 0, 0.2);
+    color: var(--neon-accent);
+    padding: 0.1em 0.3em;
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+}
 /* =============================================================================
    5. LAYOUT SYSTEM & CONTAINERS
    ============================================================================= */
@@ -223,7 +473,7 @@ a:hover {
 .grid-4 { grid-template-columns: repeat(4, 1fr); }
 
 /* =============================================================================
-   6. SCREEN MANAGEMENT SYSTEM (CRITICAL - FIXED)
+   6. NEON THEME SCREEN MANAGEMENT SYSTEM
    ============================================================================= */
 
 .screen {
@@ -232,54 +482,281 @@ a:hover {
     left: 0;
     right: 0;
     bottom: 0;
-    background: var(--white);
+    background: var(--bg-gradient);
+    background-attachment: fixed;
     opacity: 0;
     visibility: hidden;
-    transform: translateX(100%);
-    transition: all var(--transition-normal) var(--transition-bounce);
+    transform: translateX(100%) scale(0.95);
+    transition: all var(--transition-neon) var(--transition-smooth);
     overflow-y: auto;
+    overflow-x: hidden;
     z-index: 10;
+    
+    /* Glassmorphism effect */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
-/* === SCREEN VISIBILITY (FIXED FROM ORIGINAL) === */
+/* === SCREEN VISIBILITY WITH NEON ANIMATION === */
 .screen.active {
     opacity: 1;
     visibility: visible;
-    transform: translateX(0);
+    transform: translateX(0) scale(1);
     position: relative;
     z-index: 20;
+    
+    /* Entrance glow effect */
+    animation: screenGlow 0.5s ease-out;
+}
+
+@keyframes screenGlow {
+    0% {
+        box-shadow: inset 0 0 100px rgba(0, 255, 255, 0), inset 0 0 200px rgba(157, 78, 221, 0);
+    }
+    50% {
+        box-shadow: inset 0 0 30px rgba(0, 255, 255, 0.2), inset 0 0 60px rgba(157, 78, 221, 0.1);
+    }
+    100% {
+        box-shadow: inset 0 0 0 rgba(0, 255, 255, 0), inset 0 0 0 rgba(157, 78, 221, 0);
+    }
 }
 
 /* === START SCREEN DEFAULT STATE === */
 #startScreen {
     opacity: 1;
     visibility: visible;
-    transform: translateX(0);
+    transform: translateX(0) scale(1);
     position: relative;
 }
 
+/* === Screen content wrapper for better styling === */
+.screen-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing-xl);
+    position: relative;
+    
+    /* Subtle border effect */
+    border: 1px solid rgba(0, 255, 255, 0.1);
+    border-radius: var(--radius-xl);
+    background: rgba(10, 10, 15, 0.5);
+}
+
+/* === Screen transitions for mobile === */
+@media (max-width: 768px) {
+    .screen {
+        transform: translateX(100%);
+    }
+    
+    .screen.active {
+        transform: translateX(0);
+    }
+}
+
+/* === Loading screen special styling === */
+#loadingScreen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at center, rgba(157, 78, 221, 0.1) 0%, var(--bg-primary) 100%);
+}
+
+#loadingScreen .loading-content-main {
+    text-align: center;
+    color: var(--text-primary);
+}
+
+#loadingScreen .loading-spinner-large {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto var(--spacing-xl);
+    
+    /* Neon spinner animation */
+    border: 3px solid rgba(0, 255, 255, 0.1);
+    border-top: 3px solid var(--neon-primary);
+    border-radius: 50%;
+    animation: neonSpinner 1s linear infinite;
+    box-shadow: var(--glow-primary);
+}
+
+@keyframes neonSpinner {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
 /* =============================================================================
-   7. MAIN APP HEADER & NAVIGATION
+   7. NEON THEME MAIN APP HEADER & NAVIGATION
    ============================================================================= */
 
 .app-header {
-    background: var(--white);
-    box-shadow: var(--shadow-md);
-    padding: var(--spacing-md);
+    background: linear-gradient(135deg, rgba(15, 52, 96, 0.95) 0%, rgba(26, 26, 46, 0.95) 100%);
+    backdrop-filter: blur(20px) brightness(1.1);
+    -webkit-backdrop-filter: blur(20px) brightness(1.1);
+    box-shadow: var(--shadow-xl), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    padding: var(--spacing-md) var(--spacing-xl);
     position: sticky;
     top: 0;
     z-index: 100;
-    border-bottom: 3px solid var(--primary-color);
+    border-bottom: 2px solid transparent;
+    border-image: var(--primary-gradient) 1;
+    
+    /* Animated border glow */
+    animation: headerGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes headerGlow {
+    0% {
+        box-shadow: var(--shadow-xl), inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 0 0 rgba(0, 255, 255, 0);
+    }
+    100% {
+        box-shadow: var(--shadow-xl), inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 0 30px rgba(0, 255, 255, 0.3);
+    }
+}
+
+.app-header .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-lg);
 }
 
 .app-title {
-    font-size: var(--font-size-2xl);
-    font-weight: 700;
-    color: var(--primary-color);
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-black);
+    background: linear-gradient(135deg, #00FFFF 0%, #FF1493 50%, #9D4EDD 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     text-align: center;
     margin: 0;
+    text-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+    
+    /* Subtle animation */
+    animation: titlePulse 4s ease-in-out infinite;
 }
 
+@keyframes titlePulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+}
+
+/* === Header controls container === */
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+/* === Compact language selector === */
+.language-select.compact {
+    background: rgba(15, 52, 96, 0.8);
+    border: 2px solid var(--neon-primary);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-medium);
+    padding: var(--spacing-sm) var(--spacing-md);
+    min-height: 44px;
+    backdrop-filter: blur(10px);
+    transition: all var(--transition-neon);
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+}
+
+.language-select.compact:hover {
+    border-color: var(--neon-primary-light);
+    color: var(--neon-primary-light);
+    box-shadow: var(--glow-primary);
+    transform: translateY(-2px);
+}
+
+.language-select.compact:focus {
+    outline: none;
+    border-color: var(--neon-primary-light);
+    box-shadow: var(--glow-primary);
+}
+
+.language-select.compact option {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border: none;
+}
+
+/* === Theme toggle button === */
+.theme-toggle {
+    background: linear-gradient(135deg, rgba(157, 78, 221, 0.2) 0%, rgba(0, 255, 255, 0.2) 100%);
+    border: 2px solid var(--neon-purple);
+    border-radius: var(--radius-full);
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transition-neon);
+    box-shadow: 0 0 15px rgba(157, 78, 221, 0.3);
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+}
+
+.theme-toggle::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, var(--neon-purple) 0%, transparent 70%);
+    transition: all 0.3s ease;
+    transform: translate(-50%, -50%);
+}
+
+.theme-toggle:hover::before {
+    width: 100%;
+    height: 100%;
+}
+
+.theme-toggle:hover {
+    border-color: var(--neon-purple-light);
+    box-shadow: var(--glow-secondary);
+    transform: translateY(-2px) rotate(180deg);
+}
+
+.theme-icon {
+    font-size: var(--font-size-lg);
+    transition: all var(--transition-neon);
+    position: relative;
+    z-index: 2;
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+}
+
+/* === Dark mode adjustments === */
+[data-theme="dark"] .theme-toggle {
+    background: linear-gradient(135deg, rgba(0, 255, 255, 0.2) 0%, rgba(255, 20, 147, 0.2) 100%);
+    border-color: var(--neon-primary);
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+}
+
+[data-theme="dark"] .theme-toggle:hover {
+    border-color: var(--neon-primary-light);
+    box-shadow: var(--glow-primary);
+}
+
+/* Responsive header */
+@media (max-width: 768px) {
+    .app-header .container {
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+    
+    .app-title {
+        font-size: var(--font-size-2xl);
+    }
+    
+    .header-controls {
+        width: 100%;
+        justify-content: center;
+    }
+}
 /* =============================================================================
    8. FORM ELEMENTS & INPUTS
    ============================================================================= */
