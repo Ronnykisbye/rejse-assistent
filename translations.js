@@ -1,4 +1,4 @@
-// Oversættelser for Rejse Assistent
+// === OVERSÆTTELSER SEKTION ===
 const translations = {
     da: {
         appTitle: 'REJSE ASSISTENT',
@@ -147,21 +147,18 @@ const translations = {
     }
 };
 
-// Nuværende sprog
+// === SPROG HÅNDTERING SEKTION ===
 let currentLanguage = 'da';
 
-// Funktion til at skifte sprog
 function setLanguage(lang) {
     currentLanguage = lang;
     localStorage.setItem('travelAppLanguage', lang);
     updateLanguage();
 }
 
-// Opdater tekst i UI
 function updateLanguage() {
     const texts = translations[currentLanguage];
     
-    // Opdater alle elementer med data-translate attribut
     document.querySelectorAll('[data-translate]').forEach(element => {
         const key = element.getAttribute('data-translate');
         if (texts[key]) {
@@ -173,27 +170,23 @@ function updateLanguage() {
         }
     });
     
-    // Opdater specifikke elementer
     const titleElement = document.querySelector('.neon-title');
     if (titleElement) {
         const emoji = titleElement.textContent.includes('🌍') ? '🌍 ' : '';
         titleElement.textContent = emoji + texts.appTitle;
     }
     
-    // Opdater menu knapper
     document.querySelectorAll('.menu-btn').forEach((btn, index) => {
-        const map = ['restaurants', 'accommodation', 'sights', 'secrets', 'images', 'transport'];
+        const map = ['restaurants', 'accommodation', 'sights', 'secrets', 'images', 'transport', 'weather'];
         const key = map[index];
         if (texts[key] && btn.querySelector('span')) {
             btn.querySelector('span').textContent = texts[key];
         }
     });
     
-    // Opdater form labels
     updateFormLabels(texts);
 }
 
-// Opdater form labels
 function updateFormLabels(texts) {
     const labelMap = {
         'destination': texts.destination,
@@ -213,17 +206,14 @@ function updateFormLabels(texts) {
     });
 }
 
-// Get translation
 function t(key) {
     return translations[currentLanguage][key] || translations['da'][key] || key;
 }
 
-// Initialisér sprog ved start
 function initLanguage() {
     const savedLang = localStorage.getItem('travelAppLanguage') || 'da';
     currentLanguage = savedLang;
     
-    // Opdater language selector
     const langSelect = document.getElementById('languageSelect');
     if (langSelect) {
         langSelect.value = savedLang;
@@ -232,7 +222,7 @@ function initLanguage() {
     updateLanguage();
 }
 
-// Export
+// === EKSPORT SEKTION ===
 window.Translations = {
     setLanguage,
     updateLanguage,
