@@ -1,4 +1,4 @@
-// === OVERSÆTTELSER SEKTION ===
+// === OVERSETTELSER SEKTION ===
 const translations = {
     da: {
         appTitle: 'REJSE ASSISTENT',
@@ -10,15 +10,15 @@ const translations = {
         back: 'TILBAGE',
         restaurants: 'Restauranter',
         accommodation: 'Overnatning',
-        sights: '10 Seværdigheder',
-        secrets: '5 Hemmeligheder',
+        sights: 'Seværdigheder',
+        secrets: 'Hemmelige Steder',
         images: 'Billeder',
         transport: 'Transport',
         transportPlanner: 'Transport Planlægger',
         from: 'Fra',
         to: 'Til',
-        departureDate: 'Dato',
-        departureTime: 'Tidspunkt',
+        departureDate: 'Afrejse dato',
+        departureTime: 'Afrejse tid',
         planRoute: 'PLANLÆG RUTE',
         distance: 'Afstand',
         duration: 'Varighed',
@@ -27,7 +27,12 @@ const translations = {
         error: 'Der opstod en fejl',
         openInMaps: 'Åbn i Google Maps',
         website: 'Hjemmeside',
-        phone: 'Telefon'
+        phone: 'Telefon',
+        selectDestinationFirst: 'Vælg venligst en destination først',
+        errors: 'Fejl:',
+        isRequired: ' er påkrævet',
+        cityNotFound: 'Kunne ikke finde byen. Prøv venligst igen.',
+        weather: 'Vejr'
     },
     en: {
         appTitle: 'TRAVEL ASSISTANT',
@@ -35,19 +40,19 @@ const translations = {
         startDate: 'Start Date',
         days: 'Number of Days',
         selectLanguage: 'Select Language:',
-        startTravel: 'START TRAVEL',
+        startTravel: 'START TRIP',
         back: 'BACK',
         restaurants: 'Restaurants',
         accommodation: 'Accommodation',
-        sights: '10 Attractions',
-        secrets: '5 Hidden Gems',
+        sights: 'Attractions',
+        secrets: 'Secret Places',
         images: 'Images',
         transport: 'Transport',
         transportPlanner: 'Transport Planner',
         from: 'From',
         to: 'To',
-        departureDate: 'Date',
-        departureTime: 'Time',
+        departureDate: 'Departure Date',
+        departureTime: 'Departure Time',
         planRoute: 'PLAN ROUTE',
         distance: 'Distance',
         duration: 'Duration',
@@ -56,8 +61,14 @@ const translations = {
         error: 'An error occurred',
         openInMaps: 'Open in Google Maps',
         website: 'Website',
-        phone: 'Phone'
-    },
+        phone: 'Phone',
+        selectDestinationFirst: 'Please select a destination first',
+        errors: 'Errors:',
+        isRequired: ' is required',
+        cityNotFound: 'Could not find city. Please try again.',
+        weather: 'Weather'
+    }
+};
     de: {
         appTitle: 'REISE ASSISTENT',
         destination: 'Ziel Stadt',
